@@ -32,7 +32,7 @@ def infoGain(table, attribute):
     gain = ent - gain
     return gain
 
-#id3
+
 def maxGainAttribute(table, attributes):
     bestAttribute = None
     bestGain = 0
