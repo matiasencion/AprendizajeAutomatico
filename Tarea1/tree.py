@@ -8,5 +8,6 @@ class Tree:
     #imprimir el arbol de manera recursiva
     def print_tree(self, level=0):
         print(' ' * level * 2 + str(self.value))
-        for child in self.children:
-            child.print_tree(level + 1)
+        for branch_value, child in self.children.items():
+            print(' ' * (level + 1) * 2 + f'[{branch_value}]')
+            child.print_tree(level + 2)
