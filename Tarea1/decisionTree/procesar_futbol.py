@@ -35,8 +35,6 @@ COLUMNAS_CATEGORICAS = [
     "ataque_visitante",
     "defensa_visitante",
     "ventaja_localia",
-    "experiencia_local",
-    "experiencia_visitante",
 ]
 
 COLUMNAS_BINARIAS = [
