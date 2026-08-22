@@ -19,6 +19,7 @@ def entropy(table):
     return entropy * (-1)
 
 
+#TODO: probar con gainratio
 #ganancia al particionar por un atributo
 def infoGain(table, attribute):
     ent = entropy(table)
