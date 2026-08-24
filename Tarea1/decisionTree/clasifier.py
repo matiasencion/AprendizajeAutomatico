@@ -20,7 +20,7 @@ class clasifier:
         return entropy * (-1)
 
 
-    #ganancia al particionar por un atributo
+    #ganancia de un atributo
     def infoGain(self, table, attribute):
         ent = self.entropy(table)
         uniqueValues = table[attribute].unique()
@@ -33,7 +33,7 @@ class clasifier:
         gain = ent - gain
         return gain
 
-
+    #esta funcion retorna el atributo con mayor ganancia de informacion
     def maxGainAttribute(self, table, attributes):
         bestAttribute = None
         bestGain = 0
@@ -42,10 +42,11 @@ class clasifier:
             if gain > bestGain:
                 bestAttribute = attribute
                 bestGain = gain
-        return bestAttribute
+        return bestAttribute,bestGain
 
-    # (arbol_padre)->[(etiqueta1, arbol_hijo1), (etiqueta2, arbol_hijo2), ...]
+    #implementacion del algoritmo ID3 básico (por ahora)
     def getTree(self, attributes, table, min_info_gain):
+
         #si todos los resultados son iguales, retornar el resultado
         if self.entropy(table) == 0:
             return tree.Tree(table["result"].unique()[0],{})  
@@ -55,15 +56,13 @@ class clasifier:
             return tree.Tree(table["result"].mode()[0],{})
         
         #si pasamos de acá, es que ya estamos en el else general
-
         #elegir atributo con mayor ganancia
-        bestAttribute = self.maxGainAttribute(table, attributes)
+        bestAttribute, bestGain = self.maxGainAttribute(table, attributes)
         
-        # Si ningun atributo supera la ganancia minima, crear una hoja
-        # con el resultado mayoritario.
-        if bestAttribute is None:
-            return tree.Tree(table["result"].mode()[0], {})
-
+        #si ningun atributo supera la ganancia minima, se corta la recursión
+        if bestGain < min_info_gain:
+            return tree.Tree(table["result"].mode()[0],{})
+        
         children = {}
 
         possibleResults = table[bestAttribute].unique()
@@ -82,15 +81,17 @@ class clasifier:
         
         return tree.Tree(bestAttribute, children)
 
+    #se usa para entrenar el clasificador, se le pasa la tabla de entrenamiento y los atributos a usar
     def fit(self, attributes, table):
         self.tree = self.getTree(attributes, table, self.min_info_gain)
 
-    def predict(self, tree, row):
-        if not tree.children:
-            return tree.value
+    #se usa para predecir el resultado de una fila de la tabla, se le pasa la fila y retorna el resultado
+    def predict(self, row):
+        if not self.tree.children:
+            return self.tree.value
         else:
-            attribute_value = row[tree.value]
-            if attribute_value in tree.children:
+            attribute_value = row[self.tree.value]
+            if attribute_value in self.tree.children:
                 return self.predict(tree.children[attribute_value], row)
             else:
                 # Si el valor del atributo no está en los hijos, retornar None o un valor por defecto
