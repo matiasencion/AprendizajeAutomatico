@@ -376,7 +376,7 @@ def main() -> None:
     )
     parser.add_argument(
         "--entrada",
-        default="/Users/agustinmachado/Downloads/futbol_uruguayo.zip",
+        default="/Repo Aprendizaje Automatico/AprendizajeAutomatico/Tarea1/dataset/futbol_uruguayo.csv",
         help="Ruta del CSV o ZIP original.",
     )
     parser.add_argument(

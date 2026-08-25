@@ -1,8 +1,8 @@
 import math
-import tree
+from . import tree
 
 class clasifier:
-    def __init__(self, min_info_gain=0):
+    def __init__(self, min_info_gain=0.9):
         self.tree = None
         self.min_info_gain = min_info_gain
 
@@ -39,7 +39,7 @@ class clasifier:
         bestGain = 0
         for attribute in attributes:
             gain = self.infoGain(table, attribute)
-            if gain > bestGain:
+            if gain >= bestGain:
                 bestAttribute = attribute
                 bestGain = gain
         return bestAttribute,bestGain
@@ -58,11 +58,16 @@ class clasifier:
         #si pasamos de acá, es que ya estamos en el else general
         #elegir atributo con mayor ganancia
         bestAttribute, bestGain = self.maxGainAttribute(table, attributes)
-        
+
+        if bestAttribute is None:
+            return tree.Tree(table["result"].mode()[0], {})
+    
         #si ningun atributo supera la ganancia minima, se corta la recursión
         if bestGain < min_info_gain:
             return tree.Tree(table["result"].mode()[0],{})
-        
+
+
+
         children = {}
 
         possibleResults = table[bestAttribute].unique()
