@@ -19,7 +19,6 @@ class clasifier:
 
         return entropy * (-1)
 
-
     #ganancia de un atributo
     def infoGain(self, table, attribute):
         ent = self.entropy(table)
