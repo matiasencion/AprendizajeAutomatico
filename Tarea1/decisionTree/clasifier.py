@@ -91,12 +91,18 @@ class clasifier:
 
     #se usa para predecir el resultado de una fila de la tabla, se le pasa la fila y retorna el resultado
     def predict(self, row):
-        if not self.tree.children:
-            return self.tree.value
-        else:
-            attribute_value = row[self.tree.value]
-            if attribute_value in self.tree.children:
-                return self.predict(tree.children[attribute_value], row)
-            else:
-                # Si el valor del atributo no está en los hijos, retornar None o un valor por defecto
+        if self.tree is None:
+            raise ValueError("El clasificador debe entrenarse antes de predecir")
+
+        current_node = self.tree
+
+        while current_node.children:
+            attribute_value = row[current_node.value]
+
+            if attribute_value not in current_node.children:
+                # Si el valor del atributo no está en los hijos, retornar None.
                 return None
+
+            current_node = current_node.children[attribute_value]
+
+        return current_node.value
