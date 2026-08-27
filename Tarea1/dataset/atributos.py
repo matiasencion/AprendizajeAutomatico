@@ -4,6 +4,82 @@ from sklearn.base import BaseEstimator, TransformerMixin
 import pandas as pd
 import numpy as np
 
+#porcentaje de victorias de un equipo en un historial de partidos (como local o visitante)
+def win_rate(record: pd.DataFrame, team: str) -> float:
+    if len(record) == 0:
+        return 0.0
+
+    count = 0
+    for match in record.itertuples():
+        if match.home == team and match.result == "V":
+            count += 1
+        elif match.away == team and match.result == "L":
+            count += 1
+
+    return count / len(record)
+
+#funcion que obtiene el historial de partidos de un equipo hasta una fecha determinada
+def get_record(
+    dataset: pd.DataFrame,
+    years_limit: int,
+    date: pd.Timestamp,
+    team: str
+) -> pd.DataFrame:
+    
+    dataset = dataset.copy()
+
+    start_date = date - pd.DateOffset(
+        years=years_limit
+    )
+
+    record = dataset[
+        (
+            (dataset["home"] == team)
+            | (dataset["away"] == team)
+        )
+        & (dataset["date"] >= start_date)
+        & (dataset["date"] < date)
+    ]
+
+    return record.sort_values("date")
+
+def load_base_attributes(
+    dataset: pd.DataFrame,
+    years_limit: int = 1
+) -> pd.DataFrame:
+
+    dataset = dataset.copy()
+
+    #funcion que calcula los nuevos atributos para un partido dado
+    def calculate_attributes(
+        row: pd.Series
+    ) -> pd.Series:
+
+        date = row["date"]
+        home_team = row["home"]
+
+        record = get_record(
+            dataset,
+            years_limit,
+            date,
+            home_team
+        )
+
+        win_rate = win_rate(record, home_team)
+
+        return pd.Series({
+            "win_rate": win_rate,
+        })
+
+    new_attributes = dataset.apply(
+        calculate_attributes,
+        axis=1
+    )
+
+    return pd.concat(
+        [dataset, new_attributes],
+        axis=1
+    )
 
 #funcion que se usa para generar nuevos atributos a partir del dataset origial
 def load_attributes(
@@ -13,27 +89,6 @@ def load_attributes(
 ) -> pd.DataFrame:
 
     dataset = dataset.copy()
-
-    #funcion que obtiene el historial de partidos de un equipo hasta una fecha determinada
-    def get_record(
-        date: pd.Timestamp,
-        team: str
-    ) -> pd.DataFrame:
-
-        start_date = date - pd.DateOffset(
-            years=years_limit
-        )
-
-        record = dataset[
-            (
-                (dataset["home"] == team)
-                | (dataset["away"] == team)
-            )
-            & (dataset["date"] >= start_date)
-            & (dataset["date"] < date)
-        ]
-
-        return record.sort_values("date")
 
     #funcion que obtiene la cantidad de victorias de un equipo en un historial de partidos
     def get_wins(
@@ -160,10 +215,12 @@ def load_attributes(
         away_team = row["away"]
 
         home_record = get_record(
+            dataset,
             date,
             home_team
         )
         away_record = get_record(
+            dataset,
             date,
             away_team
         )
@@ -254,4 +311,19 @@ class CustomAttributeCreator(BaseEstimator, TransformerMixin):
     def transform(self, X):
         X_nuevo=X.copy() #hago una copia para no modificar el original
         X_nuevo= load_attributes(X_nuevo, self.years_limit, self.matches_limit)
+        return X_nuevo
+
+class BaseAttributeCreator(BaseEstimator, TransformerMixin):
+    def __init__(self):
+        self.years_limit = 10
+
+    #esta funcion en realidad no hace nada en este caso, pero es necesaria para que el transformer de scikit-learn funcione correctamente
+    #potencialmente serviria para generar promedios de los atributos de entrenamiento y usarlos para transformar los datos de prueba, pero no es necesario en este caso
+    def fit(self, X, y=None):
+        return self
+
+    #con esta funcion se aplica toda la transformacion, generando tambien los nuevos atributos a partir del dataset original
+    def transform(self, X):
+        X_nuevo=X.copy() #hago una copia para no modificar el original
+        X_nuevo= load_base_attributes(X_nuevo, self.years_limit)
         return X_nuevo
