@@ -240,18 +240,30 @@ def load_attributes(
         axis=1
     )
 
-class CustomAttributeCreator(BaseEstimator, TransformerMixin):
-    def __init__(self, years_limit: int = 1, matches_limit: int = 5):
-        self.years_limit = years_limit
-        self.matches_limit = matches_limit
+def load_dataset(name_dataset):
+    #leemos el dataset de futbol uruguayo
+    df = pd.read_csv(name_dataset)
 
-    #esta funcion en realidad no hace nada en este caso, pero es necesaria para que el transformer de scikit-learn funcione correctamente
-    #potencialmente serviria para generar promedios de los atributos de entrenamiento y usarlos para transformar los datos de prueba, pero no es necesario en este caso
-    def fit(self, X, y=None):
-        return self
+    #nos quedamos con las columnas que nos interesan para el clasificador
+    df = df.drop(columns=["full_time", "competition", "home_ident", "away_ident", "home_country", "away_country", "home_code", "away_code", "home_continent", "away_continent", "continent", "level"])
 
-    #con esta funcion se aplica toda la transformacion, generando tambien los nuevos atributos a partir del dataset original
-    def transform(self, X):
-        X_nuevo=X.copy() #hago una copia para no modificar el original
-        X_nuevo= load_attributes(X_nuevo, self.years_limit, self.matches_limit)
-        return X_nuevo
+    #convertimos las columnas a los tipos de datos correctos
+    df["date"] = pd.to_datetime(df["date"], errors="raise")
+    df["gh"] = pd.to_numeric(df["gh"], errors="raise").astype(int)
+    df["ga"] = pd.to_numeric(df["ga"], errors="raise").astype(int)
+
+    #ordenamos el dataset por fecha y por equipos, y eliminamos duplicados
+    df = (
+        df.drop_duplicates()
+        .sort_values(["date", "home", "away"], kind="stable")
+        .reset_index(drop=True)
+    )
+
+    #creamos la columna result, que es el resultado del partido, L si gana el local, V si gana el visitante y E si empatan
+    df["result"] = df.apply(
+        lambda row: "L" if row["gh"] > row["ga"] else ("V" if row["gh"] < row["ga"] else "E"), axis=1
+    )
+
+    df = load_attributes(df)
+
+    return df

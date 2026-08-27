@@ -2,7 +2,6 @@ from sklearn.pipeline import Pipeline
 from sklearn.compose import ColumnTransformer
 from sklearn.preprocessing import OrdinalEncoder
 
-from atributos import CustomAttributeCreator
 
 
 #atributos categoricos que deben ser codificados antes de usarlos en los modelos
@@ -21,23 +20,6 @@ numeric_attributes = [
 
 #lista completa de atributos que van a recibir los clasificadores
 model_attributes = categorical_attributes + numeric_attributes
-
-
-def create_attributes_pipeline(years_limit=10, matches_limit=5):
-    #este pipeline se aplica sobre el dataset completo porque cada partido
-    #se procesa usando unicamente los partidos anteriores a su fecha
-    return Pipeline(
-        steps=[
-            (
-                "new_attributes",
-                CustomAttributeCreator(
-                    years_limit=years_limit,
-                    matches_limit=matches_limit,
-                ),
-            )
-        ]
-    )
-
 
 def create_encoder_pipeline():
     #definimos de antemano el orden de las categorias comparativas
