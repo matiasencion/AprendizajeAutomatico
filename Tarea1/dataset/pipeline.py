@@ -5,28 +5,77 @@ from sklearn.preprocessing import OrdinalEncoder
 from atributos import CustomAttributeCreator
 
 
-def create_pipeline():
+#atributos categoricos que deben ser codificados antes de usarlos en los modelos
+categorical_attributes = [
+    "record",
+    "last_matches",
+    "goal_difference",
+]
 
-    #columnas de la tabla que se van a procesar
-    cols_to_process=["home", "away", "record", "last_matches", "goal_difference", "local_experience", "away_experience", "record_enough", "result"]
+#atributos que ya son numericos y no necesitan ser codificados
+numeric_attributes = [
+    "local_experience",
+    "away_experience",
+    "record_enough",
+]
 
-    #se define el encoder (igual que antes, y forzando a que los valores sean enteros)
-    enc = OrdinalEncoder(dtype=int)  
+#lista completa de atributos que van a recibir los clasificadores
+model_attributes = categorical_attributes + numeric_attributes
 
-    #se define el preprocesador, que aplica el encoder a las columnas que se van a procesar
+
+def create_attributes_pipeline(years_limit=10, matches_limit=5):
+    #este pipeline se aplica sobre el dataset completo porque cada partido
+    #se procesa usando unicamente los partidos anteriores a su fecha
+    return Pipeline(
+        steps=[
+            (
+                "new_attributes",
+                CustomAttributeCreator(
+                    years_limit=years_limit,
+                    matches_limit=matches_limit,
+                ),
+            )
+        ]
+    )
+
+
+def create_encoder_pipeline():
+    #definimos de antemano el orden de las categorias comparativas
+    #V significa ventaja visitante, E significa paridad y L ventaja local
+    encoder = OrdinalEncoder(
+        categories=[
+            ["V", "E", "L"],
+            ["V", "E", "L"],
+            ["V", "E", "L"],
+        ],
+        dtype=int,
+    )
+
+    #el encoder se aplica solo a los atributos categoricos, mientras que los
+    #atributos numericos pasan sin modificaciones
     preprocessor = ColumnTransformer(
         transformers=[
-            ('encoder', enc, cols_to_process)
+            (
+                "encoder",
+                encoder,
+                categorical_attributes,
+            ),
+            (
+                "numeric",
+                "passthrough",
+                numeric_attributes,
+            ),
         ],
-        verbose_feature_names_out=False #esto es para evitar que se agregue el prefijo "encoder__" a los nombres de las columnas procesadas
+        remainder="drop",
+        verbose_feature_names_out=False,
     )
 
-    preprocessor.set_output(transform="pandas") #esto es para hacer que se devuelva un dataframe de las mismas caracteristicas que el que estamos usando hasta ahora
+    #mantenemos el resultado como dataframe para conservar los nombres
+    #de las columnas luego de aplicar la transformacion
+    preprocessor.set_output(transform="pandas")
 
-    #ahora definimos el pipeline
-    pipeline_completo= Pipeline(
-        steps=[('new_attributes',CustomAttributeCreator(years_limit=10)),
-               ('encode_table', preprocessor)]
+    return Pipeline(
+        steps=[
+            ("encode_attributes", preprocessor),
+        ]
     )
-
-    return pipeline_completo
