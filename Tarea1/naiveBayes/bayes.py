@@ -12,7 +12,7 @@ class M_Estimator:
         #obtenemos las clases
         clases = Y.unique()
         #ya obtenemos el total para poder sacar las probabilidades de cada clase
-        total_clases=Y.len()
+        total_clases=len(Y)
 
         for clase in clases:
             self.prob_clases[clase]= len(Y[Y==clase])/total_clases #calculamos P(clase)
