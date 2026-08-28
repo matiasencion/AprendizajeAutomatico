@@ -57,15 +57,33 @@ def load_base_attributes(
 
         date = row["date"]
         home_team = row["home"]
+        away_team = row["away"]
 
-        record = get_record(
+        home_record = get_record(
             dataset,
             years_limit,
             date,
             home_team
         )
 
-        win_rate = win_rate(record, home_team)
+        local_record = get_record(
+            dataset,
+            years_limit,
+            date,
+            away_team
+        )
+
+        home_win_rate = win_rate(home_record, home_team)
+        away_win_rate = win_rate(local_record, away_team)
+
+        win_rate = "L"
+
+        if home_win_rate > away_win_rate:
+           win_rate = "L"
+        elif home_win_rate < away_win_rate:
+            win_rate = "V"
+        else:
+            win_rate = "E"
 
         return pd.Series({
             "win_rate": win_rate,
