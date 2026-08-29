@@ -12,9 +12,12 @@ def load_attributes(
 
     #funcion que obtiene el historial de partidos de un equipo hasta una fecha determinada
     def get_record(
+        dataset: pd.DataFrame,
+        years_limit: int,
         date: pd.Timestamp,
         team: str
     ) -> pd.DataFrame:
+        
 
         start_date = date - pd.DateOffset(
             years=years_limit
@@ -188,10 +191,12 @@ def load_attributes(
         away_team = row["away"]
 
         home_record = get_record(
+            dataset,
             date,
             home_team
         )
         away_record = get_record(
+            dataset,
             date,
             away_team
         )
@@ -320,6 +325,12 @@ def load_dataset(name_dataset):
 
     #nos quedamos con las columnas que nos interesan para el clasificador
     df = df.drop(columns=["full_time", "competition", "home_ident", "away_ident", "home_country", "away_country", "home_code", "away_code", "home_continent", "away_continent", "continent", "level"])
+
+    #con esta funcion se aplica toda la transformacion, generando tambien los nuevos atributos a partir del dataset original
+    def transform(self, X):
+        X_nuevo=X.copy() #hago una copia para no modificar el original
+        X_nuevo= load_attributes(X_nuevo, self.years_limit, self.matches_limit)
+        return X_nuevo
 
     #convertimos las columnas a los tipos de datos correctos
     df["date"] = pd.to_datetime(df["date"], errors="raise")
