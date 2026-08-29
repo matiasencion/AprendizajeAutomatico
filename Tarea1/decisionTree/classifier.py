@@ -1,12 +1,13 @@
 import math
 import numpy as np
 import pandas as pd
+from sklearn.base import BaseEstimator, ClassifierMixin
+from sklearn.utils.validation import check_is_fitted
 
 from . import tree
 
-class Classifier:
+class Classifier(ClassifierMixin, BaseEstimator):
     def __init__(self, min_info_gain=0.9):
-        self.tree = None
         self.min_info_gain = min_info_gain
 
     #entropia de los resultados Y
@@ -102,43 +103,54 @@ class Classifier:
         return tree.Tree(bestAttribute, children)
 
     #se usa para entrenar el clasificador, se pasan los atributos en X y los resultados en Y
-    def fit(self, X, Y):
-        if len(X) != len(Y):
-            raise ValueError("X e Y deben tener la misma cantidad de filas")
+    def fit(self, X, y):
+        if len(X) != len(y):
+            raise ValueError("X e y deben tener la misma cantidad de filas")
 
         #hacemos copias para no modificar los datos recibidos desde el notebook
         X = X.copy()
-        Y = pd.Series(
-            list(Y),
+        y = pd.Series(
+            list(y),
             index=X.index,
-            name="Y"
+            name="y"
         )
 
         #todas las columnas originales de X son posibles atributos del arbol
         attributes = list(X.columns)
 
-        self.tree = self.getTree(
+        self.tree_ = self.getTree(
             X,
-            Y,
+            y,
             attributes,
             self.min_info_gain
         )
+
+        #atributos que sklearn espera encontrar luego de entrenar
+        self.classes_ = np.unique(y)
+        self.n_features_in_ = X.shape[1]
+        self.feature_names_in_ = np.asarray(
+            X.columns,
+            dtype=object
+        )
+
+        #clase de respaldo para valores que no aparecieron en entrenamiento
+        self.default_class_ = y.mode()[0]
 
         return self
 
     #se usa internamente para predecir el resultado de una sola fila
     def predictRow(self, row):
-        if self.tree is None:
-            raise ValueError("El clasificador debe entrenarse antes de predecir")
+        check_is_fitted(self, "tree_")
 
-        current_node = self.tree
+        current_node = self.tree_
 
         while current_node.children:
             attribute_value = row[current_node.value]
 
             if attribute_value not in current_node.children:
-                # Si el valor del atributo no está en los hijos, retornar None.
-                return None
+                #si el valor no aparecio al entrenar, usamos la clase
+                #mayoritaria del conjunto de entrenamiento
+                return self.default_class_
 
             current_node = current_node.children[attribute_value]
 
@@ -146,6 +158,8 @@ class Classifier:
 
     #se usa para predecir todas las filas de X, igual que en los modelos de scikit-learn
     def predict(self, X):
+        check_is_fitted(self, "tree_")
+
         predictions = []
 
         for _, row in X.iterrows():
