@@ -354,3 +354,20 @@ def load_dataset(name_dataset):
     df = load_attributes(df)
 
     return df
+
+def load_base_dataset(name_dataset):
+    #leemos el dataset de futbol uruguayo
+    df = pd.read_csv(name_dataset)
+
+    #nos quedamos con las columnas que nos interesan para el clasificador
+    df = df.drop(columns=["full_time", "competition", "home_ident", "away_ident", "home_country", "away_country", "home_code", "away_code", "home_continent", "away_continent", "continent", "level"])
+
+    #convertimos las columnas a los tipos de datos correctos
+    df["date"] = pd.to_datetime(df["date"], errors="raise")
+
+    #creamos la columna result, que es el resultado del partido, L si gana el local, V si gana el visitante y E si empatan
+    df["result"] = df.apply(
+        lambda row: "L" if row["gh"] > row["ga"] else ("V" if row["gh"] < row["ga"] else "E"), axis=1
+    )
+
+    return df
