@@ -44,7 +44,7 @@ def base_classifier(
     years_limit: int,
     row: pd.Series,
 ) -> str:
-    
+
     home_record = get_record(dataset, years_limit, row.date, row.home)
     away_record = get_record(dataset, years_limit, row.date, row.away)
 
