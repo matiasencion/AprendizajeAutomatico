@@ -7,9 +7,9 @@ def win_rate(record: pd.DataFrame, team: str) -> float:
 
     count = 0
     for match in record.itertuples():
-        if match.home == team and match.gh == "L":
+        if match.home == team and match.gh > match.ga:
             count += 1
-        elif match.away == team and match.result == "V":
+        elif match.away == team and match.ga > match.gh:
             count += 1
 
     return count / len(record)
