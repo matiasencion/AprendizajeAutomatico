@@ -5,62 +5,6 @@ import pandas as pd
 import numpy as np
 
 
-def load_base_attributes(
-    dataset: pd.DataFrame,
-    years_limit: int = 1
-) -> pd.DataFrame:
-
-    dataset = dataset.copy()
-
-    #funcion que calcula los nuevos atributos para un partido dado
-    def calculate_attributes(
-        row: pd.Series
-    ) -> pd.Series:
-
-        date = row["date"]
-        home_team = row["home"]
-        away_team = row["away"]
-
-        home_record = get_record(
-            dataset,
-            years_limit,
-            date,
-            home_team
-        )
-
-        local_record = get_record(
-            dataset,
-            years_limit,
-            date,
-            away_team
-        )
-
-        home_win_rate = win_rate(home_record, home_team)
-        away_win_rate = win_rate(local_record, away_team)
-
-        win_rate = "L"
-
-        if home_win_rate > away_win_rate:
-           win_rate = "L"
-        elif home_win_rate < away_win_rate:
-            win_rate = "V"
-        else:
-            win_rate = "E"
-
-        return pd.Series({
-            "win_rate": win_rate,
-        })
-
-    new_attributes = dataset.apply(
-        calculate_attributes,
-        axis=1
-    )
-
-    return pd.concat(
-        [dataset, new_attributes],
-        axis=1
-    )
-
 #funcion que se usa para generar nuevos atributos a partir del dataset origial
 def load_attributes(
     dataset: pd.DataFrame,

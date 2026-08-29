@@ -7,9 +7,9 @@ def win_rate(record: pd.DataFrame, team: str) -> float:
 
     count = 0
     for match in record.itertuples():
-        if match.home == team and match.gh > match.ga:
+        if match.home == team and match.gh == "L":
             count += 1
-        elif match.away == team and match.ga > match.gh:
+        elif match.away == team and match.result == "V":
             count += 1
 
     return count / len(record)
@@ -42,16 +42,14 @@ def get_record(
 def base_classifier(
     dataset: pd.DataFrame,
     years_limit: int,
-    date: pd.Timestamp,
-    home_team: str,
-    away_team: str
+    row: pd.Series,
 ) -> str:
     
-    home_record = get_record(dataset, years_limit, date, home_team)
-    away_record = get_record(dataset, years_limit, date, away_team)
+    home_record = get_record(dataset, years_limit, row.date, row.home)
+    away_record = get_record(dataset, years_limit, row.date, row.away)
 
-    home_win_rate = win_rate(home_record, home_team)
-    away_win_rate = win_rate(away_record, away_team)
+    home_win_rate = win_rate(home_record, row.home)
+    away_win_rate = win_rate(away_record, row.away)
 
     if home_win_rate > away_win_rate:
         return "L"
