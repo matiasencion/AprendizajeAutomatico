@@ -4,7 +4,7 @@ import pandas as pd
 
 from . import tree
 
-class Clasifier:
+class Classifier:
     def __init__(self, min_info_gain=0.9):
         self.tree = None
         self.min_info_gain = min_info_gain

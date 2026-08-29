@@ -1,8 +1,4 @@
 import pandas as pd
-from sklearn.base import BaseEstimator, TransformerMixin
-
-import pandas as pd
-import numpy as np
 
 
 #funcion que se usa para generar nuevos atributos a partir del dataset origial
@@ -93,8 +89,22 @@ def load_attributes(
 
         return (home_points + away_points) / (len(record) * 3)
 
-    #funcion que obtiene la diferencia de goles de un equipo en un historial de partidos
-    def goal_difference_local(
+    #funcion que obtiene la tasa de empates de un historial de partidos
+    def get_draw_rate(
+        record: pd.DataFrame
+    ) -> float:
+
+        if len(record) == 0:
+            return 0.0
+
+        draws = (
+            record["result"] == "E"
+        ).sum()
+
+        return draws / len(record)
+
+    #funcion que obtiene los goles a favor de un equipo cuando juega como local
+    def goals_for_local(
         record: pd.DataFrame,
         team: str
     ) -> float:
@@ -105,13 +115,28 @@ def load_attributes(
         if len(local_matches) == 0:
             return 0.0
 
-        goals_for = local_matches["gh"].mean()
-        goals_against = local_matches["ga"].mean()
+        return float(
+            local_matches["gh"].mean()
+        )
 
-        return float(goals_for - goals_against)
+    #funcion que obtiene los goles recibidos por un equipo cuando juega como local
+    def goals_against_local(
+        record: pd.DataFrame,
+        team: str
+    ) -> float:
+        local_matches = record[
+            record["home"] == team
+        ]
 
-    #funcion que obtiene la diferencia de goles de un equipo en un historial de partidos
-    def goal_difference_away(
+        if len(local_matches) == 0:
+            return 0.0
+
+        return float(
+            local_matches["ga"].mean()
+        )
+
+    #funcion que obtiene los goles a favor de un equipo cuando juega como visitante
+    def goals_for_away(
         record: pd.DataFrame,
         team: str
     ) -> float:
@@ -122,22 +147,25 @@ def load_attributes(
         if len(away_matches) == 0:
             return 0.0
 
-        goals_for = away_matches["ga"].mean()
-        goals_against = away_matches["gh"].mean()
+        return float(
+            away_matches["ga"].mean()
+        )
 
-        return float(goals_for - goals_against)
+    #funcion que obtiene los goles recibidos por un equipo cuando juega como visitante
+    def goals_against_away(
+        record: pd.DataFrame,
+        team: str
+    ) -> float:
+        away_matches = record[
+            record["away"] == team
+        ]
 
-    #funcion que compara dos tasas y devuelve "L" si la primera es mayor, "V" si la segunda es mayor y "E" si son iguales
-    def compare(
-        home_rate: float,
-        away_rate: float
-    ) -> str:
+        if len(away_matches) == 0:
+            return 0.0
 
-        if home_rate > away_rate:
-            return "L"
-        elif home_rate < away_rate:
-            return "V"
-        return "E"
+        return float(
+            away_matches["gh"].mean()
+        )
 
     #funcion que devuelve un nivel de experiencia en base a la cantidad de partidos jugados
     def level_experience(quantity: int) -> int:
@@ -177,10 +205,9 @@ def load_attributes(
             away_team
         )
 
-        ventaja_historica = compare(
-            home_rate,
-            away_rate
-        )
+        #positivo significa mejor historial del local y negativo mejor
+        #historial del visitante
+        record_difference = home_rate - away_rate
 
         home_lasts = home_record.tail(
             matches_limit
@@ -198,15 +225,59 @@ def load_attributes(
             away_team
         )
 
-        last_matches = compare(
-            home_condition,
-            away_condition
+        #positivo significa mejor forma reciente del local y negativo mejor
+        #forma reciente del visitante
+        last_matches_difference = home_condition - away_condition
+
+        home_goals_for = goals_for_local(
+            home_record,
+            home_team
         )
 
-        goal_difference = compare(
-            goal_difference_local(home_record, home_team),
-            goal_difference_away(away_record, away_team)
+        home_goals_against = goals_against_local(
+            home_record,
+            home_team
         )
+
+        away_goals_for = goals_for_away(
+            away_record,
+            away_team
+        )
+
+        away_goals_against = goals_against_away(
+            away_record,
+            away_team
+        )
+
+        home_goal_difference = home_goals_for - home_goals_against
+        away_goal_difference = away_goals_for - away_goals_against
+
+        #comparamos al local jugando como local contra el visitante jugando
+        #como visitante
+        goal_difference_value = (
+            home_goal_difference - away_goal_difference
+        )
+
+        #positivo significa que el local convierte mas goles en casa que el
+        #visitante jugando fuera
+        attack_difference = home_goals_for - away_goals_for
+
+        #se resta en este orden porque recibir menos goles significa defender
+        #mejor; positivo representa una mejor defensa del local
+        defense_difference = away_goals_against - home_goals_against
+
+        home_draw_rate = get_draw_rate(
+            home_record
+        )
+
+        away_draw_rate = get_draw_rate(
+            away_record
+        )
+
+        #este atributo no compara equipos: mide la tendencia conjunta al empate
+        draw_rate_average = (
+            home_draw_rate + away_draw_rate
+        ) / 2
 
         local_experience = level_experience(
             len(home_record)
@@ -222,9 +293,12 @@ def load_attributes(
         )
 
         return pd.Series({
-            "record": ventaja_historica,
-            "last_matches": last_matches,
-            "goal_difference": goal_difference,
+            "record_difference": record_difference,
+            "last_matches_difference": last_matches_difference,
+            "goal_difference_value": goal_difference_value,
+            "attack_difference": attack_difference,
+            "defense_difference": defense_difference,
+            "draw_rate_average": draw_rate_average,
             "local_experience": local_experience,
             "away_experience": away_experience,
             "record_enough": record_enough,
