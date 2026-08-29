@@ -7,9 +7,9 @@ class M_Estimator:
         self.m = m #hiperparametro
         self.model={} #este modelo es el diccionario que va a contener las probabilidades de la siguiente forma modelo[clase][atributo][valor]= probabilidad, siendo P(atributo=valor|clase)
         self.clases = [] #lista de clases que vamos a tener en el dataset
-        self.prob_clases= {} #aca se almacenan las P(clase)
+        self.prob_clases= {} #aca se almacenan las log(P(clase))
         
-
+    #por temas de eficiencia, calculamos los logs directamente en el fit asi no tenemos que hacerlo en cada prediccion
     #siendo X el dataframe con los atributos e Y la columna con los resultados
     def fit(self, X, Y):
 
