@@ -192,11 +192,13 @@ def load_attributes(
 
         home_record = get_record(
             dataset,
+            years_limit,
             date,
             home_team
         )
         away_record = get_record(
             dataset,
+            years_limit,
             date,
             away_team
         )
