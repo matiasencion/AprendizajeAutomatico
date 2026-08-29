@@ -47,10 +47,13 @@ class M_Estimator(BaseEstimator, ClassifierMixin):
 
                 for value in possibleValues:
                     #calculamos P(atributo=valor|clase) con la formula de m-estimacion
-                    self.model[clase][attribute][value]= math.log((len(X[(X[attribute]==value) & (Y==clase)]) + self.m*p_c)   /   (len(Y[Y==clase]) + self.m))
+                    prob = (len(X[(X[attribute]==value) & (Y==clase)]) + self.m*p_c) / (len(Y[Y==clase]) + self.m)
+                    # Usamos max(prob, 1e-15) para evitar log(0) cuando prob es 0 (ej. m=0)
+                    self.model[clase][attribute][value] = math.log(max(prob, 1e-15))
 
                 # Guardamos la probabilidad por defecto para valores nunca vistos en el entrenamiento (frecuencia = 0)
-                self.model[clase][attribute]["__default__"] = math.log((0 + self.m*p_c) / (len(Y[Y==clase]) + self.m))
+                prob_default = (0 + self.m*p_c) / (len(Y[Y==clase]) + self.m)
+                self.model[clase][attribute]["__default__"] = math.log(max(prob_default, 1e-15))
         return self
 
 
