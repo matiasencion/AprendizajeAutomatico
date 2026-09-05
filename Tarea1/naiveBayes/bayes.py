@@ -3,8 +3,9 @@ from sklearn.base import BaseEstimator, ClassifierMixin
 import pandas as pd
 
 class M_Estimator(BaseEstimator, ClassifierMixin):
-    def __init__(self, m=2):
+    def __init__(self, m=2, fit_prior=True):
         self.m = m #hiperparametro
+        self.fit_prior = fit_prior
         # La inicialización de model, clases y prob_clases se mueve a fit() para cumplir con la API de sklearn
         
     #por temas de eficiencia, calculamos los logs directamente en el fit asi no tenemos que hacerlo en cada prediccion
@@ -36,7 +37,11 @@ class M_Estimator(BaseEstimator, ClassifierMixin):
         total_clases=len(Y)
 
         for clase in self.clases:
-            self.prob_clases[clase]= math.log(len(Y[Y==clase])/total_clases) #calculamos log(P(clase))
+            if self.fit_prior:
+                self.prob_clases[clase]= math.log(len(Y[Y==clase])/total_clases) #calculamos log(P(clase))
+            else:
+                self.prob_clases[clase]= math.log(1 / len(self.clases)) # P(clase) uniforme
+                
             self.model[clase]={}
 
             for attribute in X.columns:
