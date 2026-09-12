@@ -316,6 +316,42 @@ def load_attributes(
         axis=1
     )
 
+    # Calculate ELO sequentially
+    elo_dict = {}
+    elo_differences = []
+    
+    K = 20
+    
+    for idx, row in dataset.iterrows():
+        home = row['home']
+        away = row['away']
+        
+        home_elo = elo_dict.get(home, 1500.0)
+        away_elo = elo_dict.get(away, 1500.0)
+        
+        # Guardamos la diferencia PREVIA al partido
+        elo_diff = home_elo - away_elo
+        elo_differences.append(elo_diff)
+        
+        # Actualizamos para la proxima fecha
+        expected_home = 1 / (1 + 10 ** ((away_elo - home_elo) / 400))
+        expected_away = 1 - expected_home
+        
+        if row['gh'] > row['ga']:
+            actual_home, actual_away = 1.0, 0.0
+        elif row['gh'] < row['ga']:
+            actual_home, actual_away = 0.0, 1.0
+        else:
+            actual_home, actual_away = 0.5, 0.5
+            
+        home_elo_new = home_elo + K * (actual_home - expected_home)
+        away_elo_new = away_elo + K * (actual_away - expected_away)
+        
+        elo_dict[home] = home_elo_new
+        elo_dict[away] = away_elo_new
+
+    new_attributes["elo_difference"] = elo_differences
+
     return pd.concat(
         [dataset, new_attributes],
         axis=1

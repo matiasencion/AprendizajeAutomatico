@@ -14,6 +14,7 @@ comparative_attributes = [
     "goal_difference",
     "attack",
     "defense",
+    "elo",
 ]
 
 #atributo que representa la tendencia conjunta de los equipos al empate
@@ -31,6 +32,7 @@ difference_attributes = [
     "goal_difference_value",
     "attack_difference",
     "defense_difference",
+    "elo_difference",
 ]
 
 draw_rate_attributes = [
@@ -68,6 +70,7 @@ class MarginDiscretizer(BaseEstimator, TransformerMixin):
         goal_difference_margin=0.25,
         attack_margin=0.25,
         defense_margin=0.25,
+        elo_margin=50.0,
     ):
         # Los parametros se guardan sin modificarlos para que sklearn pueda
         # encontrarlos y variarlos con GridSearchCV.
@@ -76,6 +79,7 @@ class MarginDiscretizer(BaseEstimator, TransformerMixin):
         self.goal_difference_margin = goal_difference_margin
         self.attack_margin = attack_margin
         self.defense_margin = defense_margin
+        self.elo_margin = elo_margin
 
     def fit(self, X, y=None):
         return self
@@ -104,6 +108,10 @@ class MarginDiscretizer(BaseEstimator, TransformerMixin):
                 "defense": self._discretize(
                     X["defense_difference"],
                     self.defense_margin,
+                ),
+                "elo": self._discretize(
+                    X["elo_difference"],
+                    self.elo_margin,
                 ),
             },
             index=X.index,
@@ -163,6 +171,7 @@ def create_difference_pipeline(
     goal_difference_margin=0.25,
     attack_margin=0.25,
     defense_margin=0.25,
+    elo_margin=50.0,
 ):
 
     return Pipeline(
@@ -175,6 +184,7 @@ def create_difference_pipeline(
                     goal_difference_margin=goal_difference_margin,
                     attack_margin=attack_margin,
                     defense_margin=defense_margin,
+                    elo_margin=elo_margin,
                 ),
             ),
             (
@@ -183,6 +193,7 @@ def create_difference_pipeline(
                     # away = ventaja visitante, balanced = paridad y
                     # home = ventaja local.
                     categories=[
+                        ["away", "balanced", "home"],
                         ["away", "balanced", "home"],
                         ["away", "balanced", "home"],
                         ["away", "balanced", "home"],
@@ -230,6 +241,7 @@ def create_preprocessing(
     goal_difference_margin=0.25,
     attack_margin=0.25,
     defense_margin=0.25,
+    elo_margin=50.0,
     draw_low_threshold=0.20,
     draw_high_threshold=0.35,
 ):
@@ -240,6 +252,7 @@ def create_preprocessing(
         goal_difference_margin=goal_difference_margin,
         attack_margin=attack_margin,
         defense_margin=defense_margin,
+        elo_margin=elo_margin,
     )
 
     draw_pipeline = create_draw_pipeline(
@@ -282,6 +295,7 @@ def create_model_pipeline(
     goal_difference_margin=0.25,
     attack_margin=0.25,
     defense_margin=0.25,
+    elo_margin=50.0,
     draw_low_threshold=0.20,
     draw_high_threshold=0.35,
 ):
@@ -292,6 +306,7 @@ def create_model_pipeline(
         goal_difference_margin=goal_difference_margin,
         attack_margin=attack_margin,
         defense_margin=defense_margin,
+        elo_margin=elo_margin,
         draw_low_threshold=draw_low_threshold,
         draw_high_threshold=draw_high_threshold,
     )
