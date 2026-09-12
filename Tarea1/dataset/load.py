@@ -286,6 +286,20 @@ def load_attributes(
             home_draw_rate + away_draw_rate
         ) / 2
 
+        home_rest_days = (
+            (date - home_record.iloc[-1]["date"]).days
+            if len(home_record) > 0
+            else 30
+        )
+        away_rest_days = (
+            (date - away_record.iloc[-1]["date"]).days
+            if len(away_record) > 0
+            else 30
+        )
+        
+        #positivo significa que el local tuvo mas dias de descanso (ventaja local)
+        rest_days_difference = home_rest_days - away_rest_days
+
         local_experience = level_experience(
             len(home_record)
         )
@@ -306,6 +320,7 @@ def load_attributes(
             "attack_difference": attack_difference,
             "defense_difference": defense_difference,
             "draw_rate_average": draw_rate_average,
+            "rest_days_difference": rest_days_difference,
             "local_experience": local_experience,
             "away_experience": away_experience,
             "record_enough": record_enough,
