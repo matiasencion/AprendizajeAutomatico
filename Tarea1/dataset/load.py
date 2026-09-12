@@ -365,6 +365,13 @@ def load_base_dataset(name_dataset):
     #convertimos las columnas a los tipos de datos correctos
     df["date"] = pd.to_datetime(df["date"], errors="raise")
 
+    #ordenamos el dataset por fecha y por equipos, y eliminamos duplicados
+    df = (
+        df.drop_duplicates()
+        .sort_values(["date", "home", "away"], kind="stable")
+        .reset_index(drop=True)
+    )
+    
     #creamos la columna result, que es el resultado del partido, L si gana el local, V si gana el visitante y E si empatan
     df["result"] = df.apply(
         lambda row: "L" if row["gh"] > row["ga"] else ("V" if row["gh"] < row["ga"] else "E"), axis=1
