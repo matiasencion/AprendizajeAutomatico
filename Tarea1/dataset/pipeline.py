@@ -16,6 +16,7 @@ comparative_attributes = [
     "defense",
     "elo",
     "rest_days",
+    "h2h",
 ]
 
 #atributo que representa la tendencia conjunta de los equipos al empate
@@ -35,6 +36,7 @@ difference_attributes = [
     "defense_difference",
     "elo_difference",
     "rest_days_difference",
+    "h2h_difference",
 ]
 
 draw_rate_attributes = [
@@ -74,6 +76,7 @@ class MarginDiscretizer(BaseEstimator, TransformerMixin):
         defense_margin=0.25,
         elo_margin=50.0,
         rest_days_margin=3.0,
+        h2h_margin=0.15,
     ):
         # Los parametros se guardan sin modificarlos para que sklearn pueda
         # encontrarlos y variarlos con GridSearchCV.
@@ -84,6 +87,7 @@ class MarginDiscretizer(BaseEstimator, TransformerMixin):
         self.defense_margin = defense_margin
         self.elo_margin = elo_margin
         self.rest_days_margin = rest_days_margin
+        self.h2h_margin = h2h_margin
 
     def fit(self, X, y=None):
         return self
@@ -120,6 +124,10 @@ class MarginDiscretizer(BaseEstimator, TransformerMixin):
                 "rest_days": self._discretize(
                     X["rest_days_difference"],
                     self.rest_days_margin,
+                ),
+                "h2h": self._discretize(
+                    X["h2h_difference"],
+                    self.h2h_margin,
                 ),
             },
             index=X.index,
@@ -181,6 +189,7 @@ def create_difference_pipeline(
     defense_margin=0.25,
     elo_margin=50.0,
     rest_days_margin=3.0,
+    h2h_margin=0.15,
 ):
 
     return Pipeline(
@@ -195,6 +204,7 @@ def create_difference_pipeline(
                     defense_margin=defense_margin,
                     elo_margin=elo_margin,
                     rest_days_margin=rest_days_margin,
+                    h2h_margin=h2h_margin,
                 ),
             ),
             (
@@ -203,6 +213,7 @@ def create_difference_pipeline(
                     # away = ventaja visitante, balanced = paridad y
                     # home = ventaja local.
                     categories=[
+                        ["away", "balanced", "home"],
                         ["away", "balanced", "home"],
                         ["away", "balanced", "home"],
                         ["away", "balanced", "home"],
@@ -254,6 +265,7 @@ def create_preprocessing(
     defense_margin=0.25,
     elo_margin=50.0,
     rest_days_margin=3.0,
+    h2h_margin=0.15,
     draw_low_threshold=0.20,
     draw_high_threshold=0.35,
 ):
@@ -266,6 +278,7 @@ def create_preprocessing(
         defense_margin=defense_margin,
         elo_margin=elo_margin,
         rest_days_margin=rest_days_margin,
+        h2h_margin=h2h_margin,
     )
 
     draw_pipeline = create_draw_pipeline(
@@ -310,6 +323,7 @@ def create_model_pipeline(
     defense_margin=0.25,
     elo_margin=50.0,
     rest_days_margin=3.0,
+    h2h_margin=0.15,
     draw_low_threshold=0.20,
     draw_high_threshold=0.35,
 ):
@@ -322,6 +336,7 @@ def create_model_pipeline(
         defense_margin=defense_margin,
         elo_margin=elo_margin,
         rest_days_margin=rest_days_margin,
+        h2h_margin=h2h_margin,
         draw_low_threshold=draw_low_threshold,
         draw_high_threshold=draw_high_threshold,
     )

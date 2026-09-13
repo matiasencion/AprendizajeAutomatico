@@ -34,6 +34,30 @@ def load_attributes(
 
         return record.sort_values("date")
 
+    #funcion que obtiene el historial directo entre dos equipos
+    def get_h2h_record(
+        dataset: pd.DataFrame,
+        years_limit: int,
+        date: pd.Timestamp,
+        team1: str,
+        team2: str
+    ) -> pd.DataFrame:
+
+        start_date = date - pd.DateOffset(
+            years=years_limit
+        )
+
+        h2h = dataset[
+            (
+                ((dataset["home"] == team1) & (dataset["away"] == team2))
+                | ((dataset["home"] == team2) & (dataset["away"] == team1))
+            )
+            & (dataset["date"] >= start_date)
+            & (dataset["date"] < date)
+        ]
+
+        return h2h.sort_values("date")
+
     #funcion que obtiene la cantidad de victorias de un equipo en un historial de partidos
     def get_wins(
         record: pd.DataFrame,
@@ -286,6 +310,18 @@ def load_attributes(
             home_draw_rate + away_draw_rate
         ) / 2
 
+        #historial directo (5 años)
+        h2h_record = get_h2h_record(
+            dataset,
+            5,
+            date,
+            home_team,
+            away_team
+        )
+        home_h2h_points = get_points_rate(h2h_record, home_team)
+        away_h2h_points = get_points_rate(h2h_record, away_team)
+        h2h_difference = home_h2h_points - away_h2h_points
+
         home_rest_days = (
             (date - home_record.iloc[-1]["date"]).days
             if len(home_record) > 0
@@ -320,6 +356,7 @@ def load_attributes(
             "attack_difference": attack_difference,
             "defense_difference": defense_difference,
             "draw_rate_average": draw_rate_average,
+            "h2h_difference": h2h_difference,
             "rest_days_difference": rest_days_difference,
             "local_experience": local_experience,
             "away_experience": away_experience,
