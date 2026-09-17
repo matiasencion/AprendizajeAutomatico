@@ -22,6 +22,7 @@ MODEL_COLORS = {
     "Bayes M-estimador (propio)": "#DD8452",
     "Random Forest (sklearn)": "#55A868",
     "Naive Bayes categorico (sklearn)": "#C44E52",
+    "Clasificador base (referencia)": "#8C8C8C",
 }
 
 
