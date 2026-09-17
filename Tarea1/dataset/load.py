@@ -404,23 +404,26 @@ def load_attributes(
 
     new_attributes["elo_difference"] = elo_differences
 
+    #atributo de paridad: que tan pareja es la diferencia de nivel entre los
+    #equipos, sin importar quien es mejor. Se calcula en base al valor
+    #absoluto de la diferencia de ELO, que es el resumen mas directo del
+    #nivel de cada equipo. A diferencia de los atributos anteriores (que
+    #indican quien es mejor), este busca capturar directamente que tan
+    #cerrado esta el partido, senal que hoy no esta representada de forma
+    #explicita y que puede ayudar a distinguir empates.
+    new_attributes["elo_closeness"] = [abs(value) for value in elo_differences]
+
     return pd.concat(
         [dataset, new_attributes],
         axis=1
     )
 
-def load_dataset(name_dataset):
+def load_dataset(name_dataset, years_limit=1, matches_limit=5):
     #leemos el dataset de futbol uruguayo
     df = pd.read_csv(name_dataset)
 
     #nos quedamos con las columnas que nos interesan para el clasificador
     df = df.drop(columns=["full_time", "competition", "home_ident", "away_ident", "home_country", "away_country", "home_code", "away_code", "home_continent", "away_continent", "continent", "level"])
-
-    #con esta funcion se aplica toda la transformacion, generando tambien los nuevos atributos a partir del dataset original
-    def transform(self, X):
-        X_nuevo=X.copy() #hago una copia para no modificar el original
-        X_nuevo= load_attributes(X_nuevo, self.years_limit, self.matches_limit)
-        return X_nuevo
 
     #convertimos las columnas a los tipos de datos correctos
     df["date"] = pd.to_datetime(df["date"], errors="raise")
@@ -439,7 +442,7 @@ def load_dataset(name_dataset):
         lambda row: "L" if row["gh"] > row["ga"] else ("V" if row["gh"] < row["ga"] else "E"), axis=1
     )
 
-    df = load_attributes(df)
+    df = load_attributes(df, years_limit=years_limit, matches_limit=matches_limit)
 
     return df
 

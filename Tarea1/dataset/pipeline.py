@@ -24,7 +24,14 @@ draw_attributes = [
     "draw_tendency",
 ]
 
-categorical_attributes = comparative_attributes + draw_attributes
+#atributo que representa que tan pareja es la diferencia de nivel entre los
+#equipos (independiente de quien es mejor), pensado para ayudar a detectar
+#empates
+evenness_attributes = [
+    "match_evenness",
+]
+
+categorical_attributes = comparative_attributes + draw_attributes + evenness_attributes
 
 # Diferencias numericas calculadas cronologicamente por load_attributes.
 # Estas son las columnas que recibe el discretizador antes del encoder.
@@ -43,6 +50,12 @@ draw_rate_attributes = [
     "draw_rate_average",
 ]
 
+# Diferencia de ELO en valor absoluto, calculada cronologicamente por
+# load_attributes. Es la columna que recibe el discretizador de paridad.
+evenness_source_attributes = [
+    "elo_closeness",
+]
+
 #atributos que ya son numericos y no necesitan ser codificados
 numeric_attributes = [
     "local_experience",
@@ -57,6 +70,7 @@ model_attributes = categorical_attributes + numeric_attributes
 pipeline_input_attributes = (
     difference_attributes
     + draw_rate_attributes
+    + evenness_source_attributes
     + numeric_attributes
 )
 
@@ -180,6 +194,45 @@ class DrawRateDiscretizer(BaseEstimator, TransformerMixin):
         return np.asarray(draw_attributes, dtype=object)
 
 
+# Convierte la diferencia de ELO en valor absoluto en una categoria de
+# paridad: "low" significa equipos muy parejos (partido cerrado) y "high"
+# significa una diferencia de nivel grande entre los equipos. A diferencia
+# de MarginDiscretizer, esta categoria no indica quien es mejor, solo que
+# tan cerrada esta la diferencia.
+class EvennessDiscretizer(BaseEstimator, TransformerMixin):
+
+    def __init__(
+        self,
+        low_threshold=40.0,
+        high_threshold=150.0,
+    ):
+        self.low_threshold = low_threshold
+        self.high_threshold = high_threshold
+
+    def fit(self, X, y=None):
+        return self
+
+    def transform(self, X):
+        values = X["elo_closeness"]
+
+        return pd.DataFrame(
+            {
+                "match_evenness": np.select(
+                    [
+                        values < self.low_threshold,
+                        values > self.high_threshold,
+                    ],
+                    ["low", "high"],
+                    default="medium",
+                )
+            },
+            index=X.index,
+        )
+
+    def get_feature_names_out(self, input_features=None):
+        return np.asarray(evenness_attributes, dtype=object)
+
+
 #Pipeline para discretizar y codificar las diferencias
 def create_difference_pipeline(
     record_margin=0.05,
@@ -256,6 +309,33 @@ def create_draw_pipeline(
         ]
     )
 
+#Pipeline para discretizar y codificar la paridad (evenness)
+def create_evenness_pipeline(
+    evenness_low_threshold=40.0,
+    evenness_high_threshold=150.0,
+):
+
+    return Pipeline(
+        [
+            (
+                "discretizer",
+                EvennessDiscretizer(
+                    low_threshold=evenness_low_threshold,
+                    high_threshold=evenness_high_threshold,
+                ),
+            ),
+            (
+                "encoder",
+                OrdinalEncoder(
+                    categories=[
+                        ["low", "medium", "high"],
+                    ],
+                    dtype=int,
+                ),
+            ),
+        ]
+    )
+
 #Aplica un pipeline a las diferencias y deja pasar los numericos
 def create_preprocessing(
     record_margin=0.05,
@@ -268,6 +348,9 @@ def create_preprocessing(
     h2h_margin=0.15,
     draw_low_threshold=0.20,
     draw_high_threshold=0.35,
+    evenness_low_threshold=40.0,
+    evenness_high_threshold=150.0,
+    include_evenness=True,
 ):
 
     difference_pipeline = create_difference_pipeline(
@@ -286,24 +369,42 @@ def create_preprocessing(
         high_threshold=draw_high_threshold,
     )
 
+    transformers = [
+        (
+            "differences",
+            difference_pipeline,
+            difference_attributes,
+        ),
+        (
+            "draw_rate",
+            draw_pipeline,
+            draw_rate_attributes,
+        ),
+        (
+            "numeric",
+            "passthrough",
+            numeric_attributes,
+        ),
+    ]
+
+    # El atributo de paridad es opcional para poder comparar el pipeline
+    # con y sin el (ver experimento de paridad/evenness).
+    if include_evenness:
+        evenness_pipeline = create_evenness_pipeline(
+            evenness_low_threshold=evenness_low_threshold,
+            evenness_high_threshold=evenness_high_threshold,
+        )
+        transformers.insert(
+            2,
+            (
+                "evenness",
+                evenness_pipeline,
+                evenness_source_attributes,
+            ),
+        )
+
     preprocessing = ColumnTransformer(
-        [
-            (
-                "differences",
-                difference_pipeline,
-                difference_attributes,
-            ),
-            (
-                "draw_rate",
-                draw_pipeline,
-                draw_rate_attributes,
-            ),
-            (
-                "numeric",
-                "passthrough",
-                numeric_attributes,
-            ),
-        ],
+        transformers,
         remainder="drop",
         verbose_feature_names_out=False,
     )
@@ -326,6 +427,9 @@ def create_model_pipeline(
     h2h_margin=0.15,
     draw_low_threshold=0.20,
     draw_high_threshold=0.35,
+    evenness_low_threshold=40.0,
+    evenness_high_threshold=150.0,
+    include_evenness=True,
 ):
 
     preprocessing = create_preprocessing(
@@ -339,6 +443,9 @@ def create_model_pipeline(
         h2h_margin=h2h_margin,
         draw_low_threshold=draw_low_threshold,
         draw_high_threshold=draw_high_threshold,
+        evenness_low_threshold=evenness_low_threshold,
+        evenness_high_threshold=evenness_high_threshold,
+        include_evenness=include_evenness,
     )
 
     return Pipeline(
