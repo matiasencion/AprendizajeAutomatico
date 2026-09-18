@@ -219,3 +219,5 @@ __marimo__/
 
 # Data files
 *.csv
+# Dataset original de la tarea; mantengo este CSV versionado.
+!Tarea1/datos/futbol_uruguayo.csv
