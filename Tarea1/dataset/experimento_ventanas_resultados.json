@@ -1,0 +1,640 @@
+{
+  "window_years": {
+    "bayes": [
+      {
+        "label": "window_years=3",
+        "window_years": 3,
+        "n_folds": 18,
+        "mean_f1_macro": 0.4112941068238436,
+        "se_f1_macro": 0.009119116841537546,
+        "summary": {
+          "n_folds": 18,
+          "mean": {
+            "accuracy": 0.4484789537044996,
+            "balanced_accuracy": 0.4205211498746782,
+            "f1_macro": 0.4112941068238436
+          },
+          "std": {
+            "accuracy": 0.04288603259154402,
+            "balanced_accuracy": 0.03666333888167036,
+            "f1_macro": 0.0386891361425019
+          },
+          "se": {
+            "accuracy": 0.010108334821222689,
+            "balanced_accuracy": 0.008641631848056509,
+            "f1_macro": 0.009119116841537546
+          },
+          "grouped": {
+            "accuracy": 0.45155161494616847,
+            "balanced_accuracy": 0.42384683573434573,
+            "f1_macro": 0.41820771761884606
+          },
+          "report_text": "              precision    recall  f1-score   support\n\n       Local       0.52      0.55      0.53      1914\n      Empate       0.27      0.20      0.23      1201\n   Visitante       0.46      0.52      0.49      1622\n\n    accuracy                           0.45      4737\n   macro avg       0.42      0.42      0.42      4737\nweighted avg       0.44      0.45      0.44      4737\n"
+        }
+      },
+      {
+        "label": "window_years=5",
+        "window_years": 5,
+        "n_folds": 18,
+        "mean_f1_macro": 0.4199390950185716,
+        "se_f1_macro": 0.008810434140453453,
+        "summary": {
+          "n_folds": 18,
+          "mean": {
+            "accuracy": 0.4535188678981079,
+            "balanced_accuracy": 0.42725249495919854,
+            "f1_macro": 0.4199390950185716
+          },
+          "std": {
+            "accuracy": 0.04129953548603008,
+            "balanced_accuracy": 0.03610996975660595,
+            "f1_macro": 0.037379506355472644
+          },
+          "se": {
+            "accuracy": 0.00973439386734211,
+            "balanced_accuracy": 0.008511201494445739,
+            "f1_macro": 0.008810434140453453
+          },
+          "grouped": {
+            "accuracy": 0.45619590458095843,
+            "balanced_accuracy": 0.4303003694038859,
+            "f1_macro": 0.42636332515168346
+          },
+          "report_text": "              precision    recall  f1-score   support\n\n       Local       0.52      0.55      0.54      1914\n      Empate       0.29      0.22      0.25      1201\n   Visitante       0.46      0.52      0.49      1622\n\n    accuracy                           0.46      4737\n   macro avg       0.43      0.43      0.43      4737\nweighted avg       0.44      0.46      0.45      4737\n"
+        }
+      },
+      {
+        "label": "window_years=7",
+        "window_years": 7,
+        "n_folds": 18,
+        "mean_f1_macro": 0.4189608163459839,
+        "se_f1_macro": 0.009304045787056788,
+        "summary": {
+          "n_folds": 18,
+          "mean": {
+            "accuracy": 0.4514650478417038,
+            "balanced_accuracy": 0.4249639532394543,
+            "f1_macro": 0.4189608163459839
+          },
+          "std": {
+            "accuracy": 0.04258396113372879,
+            "balanced_accuracy": 0.03845803220365182,
+            "f1_macro": 0.039473723210987896
+          },
+          "se": {
+            "accuracy": 0.01003713589581467,
+            "balanced_accuracy": 0.009064645120764277,
+            "f1_macro": 0.009304045787056788
+          },
+          "grouped": {
+            "accuracy": 0.45345155161494616,
+            "balanced_accuracy": 0.4275787495558539,
+            "f1_macro": 0.423935979708643
+          },
+          "report_text": "              precision    recall  f1-score   support\n\n       Local       0.52      0.55      0.54      1914\n      Empate       0.28      0.22      0.25      1201\n   Visitante       0.47      0.51      0.49      1622\n\n    accuracy                           0.45      4737\n   macro avg       0.42      0.43      0.42      4737\nweighted avg       0.44      0.45      0.45      4737\n"
+        }
+      },
+      {
+        "label": "window_years=10",
+        "window_years": 10,
+        "n_folds": 18,
+        "mean_f1_macro": 0.42006739587124176,
+        "se_f1_macro": 0.008457298387349835,
+        "summary": {
+          "n_folds": 18,
+          "mean": {
+            "accuracy": 0.4508171220439776,
+            "balanced_accuracy": 0.42487234197873336,
+            "f1_macro": 0.42006739587124176
+          },
+          "std": {
+            "accuracy": 0.04105804703471151,
+            "balanced_accuracy": 0.035198877665192536,
+            "f1_macro": 0.03588127824127872
+          },
+          "se": {
+            "accuracy": 0.00967747449350691,
+            "balanced_accuracy": 0.008296455029071118,
+            "f1_macro": 0.008457298387349835
+          },
+          "grouped": {
+            "accuracy": 0.45281823939202026,
+            "balanced_accuracy": 0.42775800362703986,
+            "f1_macro": 0.4245913277568929
+          },
+          "report_text": "              precision    recall  f1-score   support\n\n       Local       0.52      0.55      0.53      1914\n      Empate       0.28      0.23      0.25      1201\n   Visitante       0.47      0.51      0.49      1622\n\n    accuracy                           0.45      4737\n   macro avg       0.42      0.43      0.42      4737\nweighted avg       0.44      0.45      0.45      4737\n"
+        }
+      }
+    ],
+    "tree": [
+      {
+        "label": "window_years=3",
+        "window_years": 3,
+        "n_folds": 18,
+        "mean_f1_macro": 0.38166301393086033,
+        "se_f1_macro": 0.0051234991148066695,
+        "summary": {
+          "n_folds": 18,
+          "mean": {
+            "accuracy": 0.40273827430218984,
+            "balanced_accuracy": 0.3843245890969812,
+            "f1_macro": 0.38166301393086033
+          },
+          "std": {
+            "accuracy": 0.0224719180011367,
+            "balanced_accuracy": 0.021775404488547652,
+            "f1_macro": 0.021737165804898415
+          },
+          "se": {
+            "accuracy": 0.005296681868290603,
+            "balanced_accuracy": 0.0051325120589773435,
+            "f1_macro": 0.0051234991148066695
+          },
+          "grouped": {
+            "accuracy": 0.4036309900781085,
+            "balanced_accuracy": 0.3859240752893869,
+            "f1_macro": 0.3848984898807757
+          },
+          "report_text": "              precision    recall  f1-score   support\n\n       Local       0.47      0.53      0.50      1914\n      Empate       0.28      0.28      0.28      1201\n   Visitante       0.41      0.35      0.38      1622\n\n    accuracy                           0.40      4737\n   macro avg       0.39      0.39      0.38      4737\nweighted avg       0.40      0.40      0.40      4737\n"
+        }
+      },
+      {
+        "label": "window_years=5",
+        "window_years": 5,
+        "n_folds": 18,
+        "mean_f1_macro": 0.4000755503390685,
+        "se_f1_macro": 0.006168881361491223,
+        "summary": {
+          "n_folds": 18,
+          "mean": {
+            "accuracy": 0.42002562017309925,
+            "balanced_accuracy": 0.40344897732551993,
+            "f1_macro": 0.4000755503390685
+          },
+          "std": {
+            "accuracy": 0.028290859063375227,
+            "balanced_accuracy": 0.026640664504442853,
+            "f1_macro": 0.026172347058274474
+          },
+          "se": {
+            "accuracy": 0.006668219429768508,
+            "balanced_accuracy": 0.006279264842135766,
+            "f1_macro": 0.006168881361491223
+          },
+          "grouped": {
+            "accuracy": 0.4209415241714165,
+            "balanced_accuracy": 0.4030250907305047,
+            "f1_macro": 0.401935928469569
+          },
+          "report_text": "              precision    recall  f1-score   support\n\n       Local       0.48      0.55      0.51      1914\n      Empate       0.30      0.30      0.30      1201\n   Visitante       0.42      0.36      0.39      1622\n\n    accuracy                           0.42      4737\n   macro avg       0.40      0.40      0.40      4737\nweighted avg       0.42      0.42      0.42      4737\n"
+        }
+      },
+      {
+        "label": "window_years=7",
+        "window_years": 7,
+        "n_folds": 18,
+        "mean_f1_macro": 0.3937662114892653,
+        "se_f1_macro": 0.007626226266733774,
+        "summary": {
+          "n_folds": 18,
+          "mean": {
+            "accuracy": 0.42081932800950184,
+            "balanced_accuracy": 0.3992446968641873,
+            "f1_macro": 0.3937662114892653
+          },
+          "std": {
+            "accuracy": 0.02695532466425575,
+            "balanced_accuracy": 0.027129516695054198,
+            "f1_macro": 0.03235533784842252
+          },
+          "se": {
+            "accuracy": 0.00635343095306008,
+            "balanced_accuracy": 0.006394488408462159,
+            "f1_macro": 0.007626226266733774
+          },
+          "grouped": {
+            "accuracy": 0.4215748363943424,
+            "balanced_accuracy": 0.39937720966957024,
+            "f1_macro": 0.39730164971612186
+          },
+          "report_text": "              precision    recall  f1-score   support\n\n       Local       0.48      0.57      0.52      1914\n      Empate       0.29      0.27      0.28      1201\n   Visitante       0.44      0.36      0.39      1622\n\n    accuracy                           0.42      4737\n   macro avg       0.40      0.40      0.40      4737\nweighted avg       0.42      0.42      0.42      4737\n"
+        }
+      },
+      {
+        "label": "window_years=10",
+        "window_years": 10,
+        "n_folds": 18,
+        "mean_f1_macro": 0.38141786596640287,
+        "se_f1_macro": 0.009977608198469408,
+        "summary": {
+          "n_folds": 18,
+          "mean": {
+            "accuracy": 0.43060704857688514,
+            "balanced_accuracy": 0.3962164883216391,
+            "f1_macro": 0.38141786596640287
+          },
+          "std": {
+            "accuracy": 0.03293681227771575,
+            "balanced_accuracy": 0.035993568465390056,
+            "f1_macro": 0.04233140650296126
+          },
+          "se": {
+            "accuracy": 0.007763281104080382,
+            "balanced_accuracy": 0.008483765446993195,
+            "f1_macro": 0.009977608198469408
+          },
+          "grouped": {
+            "accuracy": 0.4298078952923791,
+            "balanced_accuracy": 0.39561332421989776,
+            "f1_macro": 0.38648688418263405
+          },
+          "report_text": "              precision    recall  f1-score   support\n\n       Local       0.46      0.66      0.54      1914\n      Empate       0.28      0.19      0.23      1201\n   Visitante       0.45      0.34      0.39      1622\n\n    accuracy                           0.43      4737\n   macro avg       0.40      0.40      0.39      4737\nweighted avg       0.41      0.43      0.41      4737\n"
+        }
+      }
+    ]
+  },
+  "years_limit": {
+    "bayes": [
+      {
+        "label": "years_limit=1",
+        "years_limit": 1,
+        "n_folds": 18,
+        "mean_f1_macro": 0.4199390950185716,
+        "se_f1_macro": 0.008810434140453453,
+        "summary": {
+          "n_folds": 18,
+          "mean": {
+            "accuracy": 0.4535188678981079,
+            "balanced_accuracy": 0.42725249495919854,
+            "f1_macro": 0.4199390950185716
+          },
+          "std": {
+            "accuracy": 0.04129953548603008,
+            "balanced_accuracy": 0.03610996975660595,
+            "f1_macro": 0.037379506355472644
+          },
+          "se": {
+            "accuracy": 0.00973439386734211,
+            "balanced_accuracy": 0.008511201494445739,
+            "f1_macro": 0.008810434140453453
+          },
+          "grouped": {
+            "accuracy": 0.45619590458095843,
+            "balanced_accuracy": 0.4303003694038859,
+            "f1_macro": 0.42636332515168346
+          },
+          "report_text": "              precision    recall  f1-score   support\n\n       Local       0.52      0.55      0.54      1914\n      Empate       0.29      0.22      0.25      1201\n   Visitante       0.46      0.52      0.49      1622\n\n    accuracy                           0.46      4737\n   macro avg       0.43      0.43      0.43      4737\nweighted avg       0.44      0.46      0.45      4737\n"
+        }
+      },
+      {
+        "label": "years_limit=2",
+        "years_limit": 2,
+        "n_folds": 18,
+        "mean_f1_macro": 0.4243871994153454,
+        "se_f1_macro": 0.009294544415132538,
+        "summary": {
+          "n_folds": 18,
+          "mean": {
+            "accuracy": 0.4497967400933822,
+            "balanced_accuracy": 0.4275121770525011,
+            "f1_macro": 0.4243871994153454
+          },
+          "std": {
+            "accuracy": 0.041853452011747345,
+            "balanced_accuracy": 0.03905863250620643,
+            "f1_macro": 0.03943341230387862
+          },
+          "se": {
+            "accuracy": 0.0098649532445241,
+            "balanced_accuracy": 0.009206207969670628,
+            "f1_macro": 0.009294544415132538
+          },
+          "grouped": {
+            "accuracy": 0.45070719864893394,
+            "balanced_accuracy": 0.429621030505521,
+            "f1_macro": 0.4290443817915293
+          },
+          "report_text": "              precision    recall  f1-score   support\n\n       Local       0.52      0.55      0.53      1914\n      Empate       0.30      0.28      0.29      1201\n   Visitante       0.47      0.46      0.47      1622\n\n    accuracy                           0.45      4737\n   macro avg       0.43      0.43      0.43      4737\nweighted avg       0.45      0.45      0.45      4737\n"
+        }
+      },
+      {
+        "label": "years_limit=3",
+        "years_limit": 3,
+        "n_folds": 18,
+        "mean_f1_macro": 0.4260837925185462,
+        "se_f1_macro": 0.008728978708663898,
+        "summary": {
+          "n_folds": 18,
+          "mean": {
+            "accuracy": 0.45300096572869525,
+            "balanced_accuracy": 0.42995718236476305,
+            "f1_macro": 0.4260837925185462
+          },
+          "std": {
+            "accuracy": 0.04203921145619237,
+            "balanced_accuracy": 0.035663338129288506,
+            "f1_macro": 0.03703392022637541
+          },
+          "se": {
+            "accuracy": 0.009908737165469608,
+            "balanced_accuracy": 0.00840592941032289,
+            "f1_macro": 0.008728978708663898
+          },
+          "grouped": {
+            "accuracy": 0.45345155161494616,
+            "balanced_accuracy": 0.43222992484025397,
+            "f1_macro": 0.43167419551787467
+          },
+          "report_text": "              precision    recall  f1-score   support\n\n       Local       0.52      0.55      0.53      1914\n      Empate       0.30      0.28      0.29      1201\n   Visitante       0.48      0.47      0.47      1622\n\n    accuracy                           0.45      4737\n   macro avg       0.43      0.43      0.43      4737\nweighted avg       0.45      0.45      0.45      4737\n"
+        }
+      }
+    ],
+    "tree": [
+      {
+        "label": "years_limit=1",
+        "years_limit": 1,
+        "n_folds": 18,
+        "mean_f1_macro": 0.4000755503390685,
+        "se_f1_macro": 0.006168881361491223,
+        "summary": {
+          "n_folds": 18,
+          "mean": {
+            "accuracy": 0.42002562017309925,
+            "balanced_accuracy": 0.40344897732551993,
+            "f1_macro": 0.4000755503390685
+          },
+          "std": {
+            "accuracy": 0.028290859063375227,
+            "balanced_accuracy": 0.026640664504442853,
+            "f1_macro": 0.026172347058274474
+          },
+          "se": {
+            "accuracy": 0.006668219429768508,
+            "balanced_accuracy": 0.006279264842135766,
+            "f1_macro": 0.006168881361491223
+          },
+          "grouped": {
+            "accuracy": 0.4209415241714165,
+            "balanced_accuracy": 0.4030250907305047,
+            "f1_macro": 0.401935928469569
+          },
+          "report_text": "              precision    recall  f1-score   support\n\n       Local       0.48      0.55      0.51      1914\n      Empate       0.30      0.30      0.30      1201\n   Visitante       0.42      0.36      0.39      1622\n\n    accuracy                           0.42      4737\n   macro avg       0.40      0.40      0.40      4737\nweighted avg       0.42      0.42      0.42      4737\n"
+        }
+      },
+      {
+        "label": "years_limit=2",
+        "years_limit": 2,
+        "n_folds": 18,
+        "mean_f1_macro": 0.3757778000493651,
+        "se_f1_macro": 0.006198824327596872,
+        "summary": {
+          "n_folds": 18,
+          "mean": {
+            "accuracy": 0.40107587264153477,
+            "balanced_accuracy": 0.3785859507040277,
+            "f1_macro": 0.3757778000493651
+          },
+          "std": {
+            "accuracy": 0.029000118980992126,
+            "balanced_accuracy": 0.025918957228519238,
+            "f1_macro": 0.02629938430456733
+          },
+          "se": {
+            "accuracy": 0.0068353935955587485,
+            "balanced_accuracy": 0.006109156805856679,
+            "f1_macro": 0.006198824327596872
+          },
+          "grouped": {
+            "accuracy": 0.40194215748363943,
+            "balanced_accuracy": 0.38089083770740556,
+            "f1_macro": 0.3797989105235608
+          },
+          "report_text": "              precision    recall  f1-score   support\n\n       Local       0.46      0.53      0.49      1914\n      Empate       0.26      0.25      0.25      1201\n   Visitante       0.42      0.37      0.39      1622\n\n    accuracy                           0.40      4737\n   macro avg       0.38      0.38      0.38      4737\nweighted avg       0.40      0.40      0.40      4737\n"
+        }
+      },
+      {
+        "label": "years_limit=3",
+        "years_limit": 3,
+        "n_folds": 18,
+        "mean_f1_macro": 0.3828692061754055,
+        "se_f1_macro": 0.006438294278777105,
+        "summary": {
+          "n_folds": 18,
+          "mean": {
+            "accuracy": 0.40917718669056313,
+            "balanced_accuracy": 0.3858882560655255,
+            "f1_macro": 0.3828692061754055
+          },
+          "std": {
+            "accuracy": 0.026433162285597802,
+            "balanced_accuracy": 0.026174673045101637,
+            "f1_macro": 0.02731536926278706
+          },
+          "se": {
+            "accuracy": 0.006230356100116902,
+            "balanced_accuracy": 0.006169429601844036,
+            "f1_macro": 0.006438294278777105
+          },
+          "grouped": {
+            "accuracy": 0.4078530715642812,
+            "balanced_accuracy": 0.38630281186534265,
+            "f1_macro": 0.3847670491331355
+          },
+          "report_text": "              precision    recall  f1-score   support\n\n       Local       0.46      0.54      0.50      1914\n      Empate       0.28      0.25      0.26      1201\n   Visitante       0.42      0.36      0.39      1622\n\n    accuracy                           0.41      4737\n   macro avg       0.39      0.39      0.38      4737\nweighted avg       0.40      0.41      0.40      4737\n"
+        }
+      }
+    ]
+  },
+  "matches_limit": {
+    "bayes": [
+      {
+        "label": "matches_limit=3",
+        "matches_limit": 3,
+        "n_folds": 18,
+        "mean_f1_macro": 0.41364202605051503,
+        "se_f1_macro": 0.008996658196680312,
+        "summary": {
+          "n_folds": 18,
+          "mean": {
+            "accuracy": 0.4463968874920844,
+            "balanced_accuracy": 0.4209701119890184,
+            "f1_macro": 0.41364202605051503
+          },
+          "std": {
+            "accuracy": 0.040157641454124905,
+            "balanced_accuracy": 0.0366213994724491,
+            "f1_macro": 0.038169588113341105
+          },
+          "se": {
+            "accuracy": 0.00946524686288991,
+            "balanced_accuracy": 0.008631746634503406,
+            "f1_macro": 0.008996658196680312
+          },
+          "grouped": {
+            "accuracy": 0.4490183660544648,
+            "balanced_accuracy": 0.4242376459314177,
+            "f1_macro": 0.4210562884319815
+          },
+          "report_text": "              precision    recall  f1-score   support\n\n       Local       0.52      0.54      0.53      1914\n      Empate       0.28      0.23      0.25      1201\n   Visitante       0.46      0.50      0.48      1622\n\n    accuracy                           0.45      4737\n   macro avg       0.42      0.42      0.42      4737\nweighted avg       0.44      0.45      0.44      4737\n"
+        }
+      },
+      {
+        "label": "matches_limit=5",
+        "matches_limit": 5,
+        "n_folds": 18,
+        "mean_f1_macro": 0.4199390950185716,
+        "se_f1_macro": 0.008810434140453453,
+        "summary": {
+          "n_folds": 18,
+          "mean": {
+            "accuracy": 0.4535188678981079,
+            "balanced_accuracy": 0.42725249495919854,
+            "f1_macro": 0.4199390950185716
+          },
+          "std": {
+            "accuracy": 0.04129953548603008,
+            "balanced_accuracy": 0.03610996975660595,
+            "f1_macro": 0.037379506355472644
+          },
+          "se": {
+            "accuracy": 0.00973439386734211,
+            "balanced_accuracy": 0.008511201494445739,
+            "f1_macro": 0.008810434140453453
+          },
+          "grouped": {
+            "accuracy": 0.45619590458095843,
+            "balanced_accuracy": 0.4303003694038859,
+            "f1_macro": 0.42636332515168346
+          },
+          "report_text": "              precision    recall  f1-score   support\n\n       Local       0.52      0.55      0.54      1914\n      Empate       0.29      0.22      0.25      1201\n   Visitante       0.46      0.52      0.49      1622\n\n    accuracy                           0.46      4737\n   macro avg       0.43      0.43      0.43      4737\nweighted avg       0.44      0.46      0.45      4737\n"
+        }
+      },
+      {
+        "label": "matches_limit=8",
+        "matches_limit": 8,
+        "n_folds": 18,
+        "mean_f1_macro": 0.41666679773074045,
+        "se_f1_macro": 0.00931684910695511,
+        "summary": {
+          "n_folds": 18,
+          "mean": {
+            "accuracy": 0.4515617452862118,
+            "balanced_accuracy": 0.4244721179079256,
+            "f1_macro": 0.41666679773074045
+          },
+          "std": {
+            "accuracy": 0.0442967137427423,
+            "balanced_accuracy": 0.038934550546955916,
+            "f1_macro": 0.03952804309691872
+          },
+          "se": {
+            "accuracy": 0.010440835557257472,
+            "balanced_accuracy": 0.009176961571400978,
+            "f1_macro": 0.00931684910695511
+          },
+          "grouped": {
+            "accuracy": 0.45408486383787205,
+            "balanced_accuracy": 0.42790113160006316,
+            "f1_macro": 0.423408485583084
+          },
+          "report_text": "              precision    recall  f1-score   support\n\n       Local       0.52      0.55      0.53      1914\n      Empate       0.28      0.21      0.24      1201\n   Visitante       0.47      0.52      0.49      1622\n\n    accuracy                           0.45      4737\n   macro avg       0.42      0.43      0.42      4737\nweighted avg       0.44      0.45      0.45      4737\n"
+        }
+      }
+    ],
+    "tree": [
+      {
+        "label": "matches_limit=3",
+        "matches_limit": 3,
+        "n_folds": 18,
+        "mean_f1_macro": 0.3846346084281711,
+        "se_f1_macro": 0.00714630620309794,
+        "summary": {
+          "n_folds": 18,
+          "mean": {
+            "accuracy": 0.40522364818515166,
+            "balanced_accuracy": 0.387944277011371,
+            "f1_macro": 0.3846346084281711
+          },
+          "std": {
+            "accuracy": 0.028894469527345406,
+            "balanced_accuracy": 0.029607768415572673,
+            "f1_macro": 0.03031920945987625
+          },
+          "se": {
+            "accuracy": 0.006810491780524665,
+            "balanced_accuracy": 0.00697861794081744,
+            "f1_macro": 0.00714630620309794
+          },
+          "grouped": {
+            "accuracy": 0.40574203082119487,
+            "balanced_accuracy": 0.38843938775122727,
+            "f1_macro": 0.3873227486636454
+          },
+          "report_text": "              precision    recall  f1-score   support\n\n       Local       0.47      0.53      0.50      1914\n      Empate       0.28      0.29      0.29      1201\n   Visitante       0.42      0.34      0.38      1622\n\n    accuracy                           0.41      4737\n   macro avg       0.39      0.39      0.39      4737\nweighted avg       0.40      0.41      0.40      4737\n"
+        }
+      },
+      {
+        "label": "matches_limit=5",
+        "matches_limit": 5,
+        "n_folds": 18,
+        "mean_f1_macro": 0.4000755503390685,
+        "se_f1_macro": 0.006168881361491223,
+        "summary": {
+          "n_folds": 18,
+          "mean": {
+            "accuracy": 0.42002562017309925,
+            "balanced_accuracy": 0.40344897732551993,
+            "f1_macro": 0.4000755503390685
+          },
+          "std": {
+            "accuracy": 0.028290859063375227,
+            "balanced_accuracy": 0.026640664504442853,
+            "f1_macro": 0.026172347058274474
+          },
+          "se": {
+            "accuracy": 0.006668219429768508,
+            "balanced_accuracy": 0.006279264842135766,
+            "f1_macro": 0.006168881361491223
+          },
+          "grouped": {
+            "accuracy": 0.4209415241714165,
+            "balanced_accuracy": 0.4030250907305047,
+            "f1_macro": 0.401935928469569
+          },
+          "report_text": "              precision    recall  f1-score   support\n\n       Local       0.48      0.55      0.51      1914\n      Empate       0.30      0.30      0.30      1201\n   Visitante       0.42      0.36      0.39      1622\n\n    accuracy                           0.42      4737\n   macro avg       0.40      0.40      0.40      4737\nweighted avg       0.42      0.42      0.42      4737\n"
+        }
+      },
+      {
+        "label": "matches_limit=8",
+        "matches_limit": 8,
+        "n_folds": 18,
+        "mean_f1_macro": 0.38767011595008805,
+        "se_f1_macro": 0.007912100092816315,
+        "summary": {
+          "n_folds": 18,
+          "mean": {
+            "accuracy": 0.4075681848881556,
+            "balanced_accuracy": 0.3902238139690992,
+            "f1_macro": 0.38767011595008805
+          },
+          "std": {
+            "accuracy": 0.035735148646028496,
+            "balanced_accuracy": 0.0331573529376997,
+            "f1_macro": 0.03356819777434277
+          },
+          "se": {
+            "accuracy": 0.008422855311438675,
+            "balanced_accuracy": 0.007815263036147716,
+            "f1_macro": 0.007912100092816315
+          },
+          "grouped": {
+            "accuracy": 0.4086974878615157,
+            "balanced_accuracy": 0.3904180392424932,
+            "f1_macro": 0.3899690255370208
+          },
+          "report_text": "              precision    recall  f1-score   support\n\n       Local       0.48      0.52      0.50      1914\n      Empate       0.27      0.28      0.28      1201\n   Visitante       0.42      0.37      0.40      1622\n\n    accuracy                           0.41      4737\n   macro avg       0.39      0.39      0.39      4737\nweighted avg       0.41      0.41      0.41      4737\n"
+        }
+      }
+    ]
+  }
+}
