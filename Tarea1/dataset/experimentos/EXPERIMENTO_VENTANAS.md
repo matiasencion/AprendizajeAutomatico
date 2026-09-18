@@ -135,9 +135,45 @@ con el mejor en ambos modelos.** Tampoco hacía falta cambiarlo.
    prácticamente igual; lo que mejoró fue la confiabilidad estadística de
    la elección (error estándar del ganador ~31-34% menor).
 
+## 2026-09-18 — Repetido después de agregar `min_samples_split` al árbol
+
+Al agregar `min_samples_split` al árbol propio (ver
+`EXPERIMENTO_MIN_SAMPLES_SPLIT.md`) surgió la duda de si las conclusiones
+de arriba seguían siendo válidas: `min_samples_split` interactúa
+directamente con cuántos ejemplos hay disponibles por nodo, que es
+justamente lo que estas ventanas controlan. Se repitió el mismo
+experimento con los hiperparámetros ganadores de esa búsqueda
+(`min_info_gain=0.00625, min_samples_split=10`, más los márgenes de esa
+misma búsqueda) en vez de los anteriores. Bayes no cambió, se recalculó
+igual para mantener el mismo formato de resultados.
+
+| | `window_years` (árbol) | `years_limit` (árbol) | `matches_limit` (árbol) |
+|---|---|---|---|
+| Antes (sin `min_samples_split`) | 5 claramente mejor | 1 claramente mejor | 5 claramente mejor |
+| Ahora (con `min_samples_split=10`) | 5 mejor, empatado con 7 dentro de 1 SE | 1 claramente mejor (2 y 3 siguen peor) | 5 mejor, empatado con 3 y 8 dentro de 1 SE |
+
+**Los tres valores ya adoptados (`window_years=5`, `years_limit=1`,
+`matches_limit=5`) siguen siendo el mejor o empatado con el mejor** — no
+cambia ninguna decisión. Lo único que cambió es que ahora hay *más*
+candidatos dentro de la banda de 1 SE en `window_years` y `matches_limit`
+(la nueva regularización hace al árbol un poco menos sensible a estas
+ventanas, lo cual tiene sentido: `min_samples_split` ya protege contra
+parte del sobreajuste que antes hacía más notoria la diferencia entre
+ventanas). `years_limit` quedó, si acaso, más decisivo a favor de 1 que
+antes.
+
+Valores completos: F1 macro del árbol con `min_samples_split=10` — 
+`window_years`: 3→0.3861, 5→0.3993, 7→0.3992, 10→0.3836.
+`years_limit`: 1→0.3993, 2→0.3828, 3→0.3868.
+`matches_limit`: 3→0.3939, 5→0.3993, 8→0.3938.
+
 ## Reproducibilidad
 
-Script: `window_experiment.py`. Resultados completos (todas las
-combinaciones, ambos modelos, con reportes por clase) en
-`resultados/experimento_ventanas_resultados.json`. No se usó el conjunto de test
-2024-2025 en ningún paso.
+Script: `window_experiment.py` (contiene los hiperparámetros del árbol
+actualizados a la versión con `min_samples_split`; la corrida anterior,
+sin ese hiperparámetro, quedó documentada arriba con sus propios
+números). Resultados completos (todas las combinaciones, ambos modelos,
+con reportes por clase) en
+`resultados/experimento_ventanas_resultados.json` (sobrescrito con la
+corrida más reciente). No se usó el conjunto de test 2024-2025 en ningún
+paso.

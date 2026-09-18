@@ -28,6 +28,13 @@ Reglas del experimento (pedidas por el usuario):
   encontrados (incluyendo el atributo de paridad con sus mejores umbrales
   del experimento anterior), para aislar el efecto de lo que se esta
   probando ahora.
+
+Actualizacion (2026-09-18): se repitio este experimento despues de
+agregar `min_samples_split` al arbol propio (ver
+EXPERIMENTO_MIN_SAMPLES_SPLIT.md), usando el ganador de esa busqueda como
+`tree_best_params`/hiperparametros del modelo. Bayes no cambio, se
+recalcula igual para mantener el mismo formato de resultados que ya lee
+entrega.ipynb.
 """
 
 import json
@@ -68,12 +75,18 @@ def main():
         draw_low_threshold=0.3, draw_high_threshold=0.6,
         evenness_low_threshold=50.0, evenness_high_threshold=150.0,
     )
+    # Ganador de experimentos/EXPERIMENTO_MIN_SAMPLES_SPLIT.md: se agrego
+    # min_samples_split al arbol propio, y este es el ganador de esa
+    # busqueda (elegida por CV, no por el resultado de test). Se repite
+    # el experimento de ventanas con esta configuracion porque
+    # min_samples_split interactua con cuanta informacion hay disponible
+    # por nodo, que es justamente lo que estas ventanas controlan.
     tree_best_params = dict(
-        record_margin=0.065, last_matches_margin=0.005, goal_difference_margin=0.725,
-        attack_margin=0.22, defense_margin=0.015, elo_margin=50.0,
-        rest_days_margin=5.0, h2h_margin=0.05,
-        draw_low_threshold=0.1675, draw_high_threshold=0.41,
-        evenness_low_threshold=20.0, evenness_high_threshold=100.0,
+        record_margin=0.06, last_matches_margin=0.0, goal_difference_margin=0.15,
+        attack_margin=0.2, defense_margin=0.01, elo_margin=75.0,
+        rest_days_margin=7.0, h2h_margin=0.2,
+        draw_low_threshold=0.35, draw_high_threshold=0.45,
+        evenness_low_threshold=50.0, evenness_high_threshold=120.0,
     )
 
     labels = ["L", "E", "V"]
@@ -83,7 +96,10 @@ def main():
         return create_model_pipeline(BayesClassifier(m=2.0, fit_prior=False), **bayes_best_params)
 
     def make_tree_pipeline():
-        return create_model_pipeline(DecisionTreeClassifier(min_info_gain=0.0075), **tree_best_params)
+        return create_model_pipeline(
+            DecisionTreeClassifier(min_info_gain=0.00625, min_samples_split=10),
+            **tree_best_params,
+        )
 
     def build_temporal_splits(train, validation_years, window_years):
         train_years = train["date"].dt.year.to_numpy()

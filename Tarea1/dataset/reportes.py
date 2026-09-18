@@ -169,3 +169,83 @@ def grafico_matrices_confusion(y_true, predicciones: dict, labels=("L", "E", "V"
 def reporte_por_clase(y_true, y_pred, labels=("L", "E", "V"), target_names=("Local", "Empate", "Visitante")) -> str:
     """Atajo para el reporte de texto de sklearn, con los nombres en espanol ya fijados."""
     return classification_report(y_true, y_pred, labels=list(labels), target_names=list(target_names), zero_division=0)
+
+
+# ---------------------------------------------------------------------
+# Sensibilidad a hiperparametros (a partir de cv_results_ de una
+# RandomizedSearchCV ya corrida: una fila por candidato probado).
+# ---------------------------------------------------------------------
+
+def grafico_sensibilidad_hiperparametro(
+    cv_results: pd.DataFrame,
+    param_col: str,
+    xlabel: str,
+    titulo: str,
+    metrica: str = "mean_test_f1_macro",
+    color: str = "#4C72B0",
+):
+    """
+    Vista marginal de sensibilidad: agrupa los ~500 candidatos de una
+    busqueda aleatoria por el valor que tomaron en `param_col` y grafica
+    la media (linea) y el rango entre percentiles 25-75 (banda sombreada)
+    de `metrica` en cada grupo. Como el resto de los hiperparametros varia
+    "como ruido" dentro de cada grupo (es una busqueda aleatoria, no una
+    grilla completa fijando todo lo demas), esto es una aproximacion al
+    efecto marginal de ese hiperparametro, no un corte perfectamente
+    controlado -- pero con ~500 candidatos alcanza para ver la tendencia.
+    """
+    datos = cv_results[[param_col, metrica]].dropna(subset=[metrica])
+    agrupado = datos.groupby(param_col)[metrica]
+    valores = sorted(agrupado.groups.keys())
+
+    medias = [agrupado.get_group(v).mean() for v in valores]
+    p25 = [agrupado.get_group(v).quantile(0.25) for v in valores]
+    p75 = [agrupado.get_group(v).quantile(0.75) for v in valores]
+
+    fig, ax = plt.subplots(figsize=(7, 4.5))
+    x = np.arange(len(valores))
+    ax.plot(x, medias, marker="o", color=color, label="media entre candidatos")
+    ax.fill_between(x, p25, p75, alpha=0.2, color=color, label="rango percentil 25-75")
+    ax.set_xticks(x)
+    ax.set_xticklabels([str(v) for v in valores], rotation=45 if len(valores) > 6 else 0, ha="right")
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel("F1 macro (media anual de 18 folds)")
+    ax.set_title(titulo)
+    ax.legend(fontsize=8)
+    ax.grid(alpha=0.3)
+    fig.tight_layout()
+    return fig
+
+
+def grafico_importancia_hiperparametros(
+    cv_results: pd.DataFrame,
+    params: dict,
+    titulo: str,
+    metrica: str = "mean_test_f1_macro",
+):
+    """
+    params: {columna_param: etiqueta_legible}. Para cada hiperparametro,
+    agrupa los candidatos por su valor, promedia `metrica` en cada grupo,
+    y mide el rango (maximo-minimo) entre esos promedios -- una medida
+    simple de "cuanto mueve la aguja" ese hiperparametro dentro de la
+    busqueda. Sirve para comparar de un vistazo muchos hiperparametros
+    (por ejemplo, los margenes de discretizacion) sin tener que graficar
+    cada uno por separado. No reemplaza a `grafico_sensibilidad_hiperparametro`
+    para los 2-3 hiperparametros que interesa ver en detalle.
+    """
+    filas = []
+    for columna, etiqueta in params.items():
+        promedios = cv_results.groupby(columna)[metrica].mean()
+        filas.append((etiqueta, promedios.max() - promedios.min()))
+    filas.sort(key=lambda f: f[1])
+
+    etiquetas = [f[0] for f in filas]
+    rangos = [f[1] for f in filas]
+
+    fig, ax = plt.subplots(figsize=(7, 0.42 * len(etiquetas) + 1.5))
+    ax.barh(etiquetas, rangos, color="#55A868")
+    ax.set_xlabel("Rango de F1 macro entre valores probados")
+    ax.set_title(titulo)
+    ax.grid(axis="x", alpha=0.3)
+    fig.tight_layout()
+    return fig

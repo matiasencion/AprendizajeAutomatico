@@ -7,8 +7,14 @@ from sklearn.utils.validation import check_is_fitted
 from . import tree
 
 class Classifier(ClassifierMixin, BaseEstimator):
-    def __init__(self, min_info_gain=0.9):
+    def __init__(self, min_info_gain=0.9, min_samples_split=2):
         self.min_info_gain = min_info_gain
+        #cantidad minima de ejemplos que debe tener un nodo para intentar
+        #dividirlo; si tiene menos, se corta la recursion y se devuelve la
+        #clase mas comun de ese subconjunto. min_info_gain no alcanza para
+        #evitar esto por si solo: mide ganancia relativa, no le importa si
+        #esa ganancia se calculo sobre 300 filas o sobre 3.
+        self.min_samples_split = min_samples_split
 
     #entropia de los resultados Y
     def entropy(self, Y):
@@ -56,16 +62,23 @@ class Classifier(ClassifierMixin, BaseEstimator):
         return bestAttribute,bestGain
 
     #implementacion del algoritmo ID3 básico (por ahora)
-    def getTree(self, X, Y, attributes, min_info_gain):
+    def getTree(self, X, Y, attributes, min_info_gain, min_samples_split):
 
         #si todos los resultados son iguales, retornar el resultado
         if self.entropy(Y) == 0:
-            return tree.Tree(Y.unique()[0],{})  
-        
+            return tree.Tree(Y.unique()[0],{})
+
         #si atributos es vacio
         if len(attributes) == 0:
             return tree.Tree(Y.mode()[0],{})
-        
+
+        #si el nodo tiene muy pocos ejemplos, no vale la pena seguir
+        #dividiendo: la ganancia de informacion que se calcularia sobre
+        #tan pocas filas no es confiable, y son estas hojas chicas las
+        #que mas overfittean y menos generalizan
+        if len(Y) < min_samples_split:
+            return tree.Tree(Y.mode()[0], {})
+
         #si pasamos de acá, es que ya estamos en el else general
         #elegir atributo con mayor ganancia
         bestAttribute, bestGain = self.maxGainAttribute(X, Y, attributes)
@@ -97,7 +110,8 @@ class Classifier(ClassifierMixin, BaseEstimator):
                 XAux,
                 YAux,
                 remaining_attributes,
-                min_info_gain
+                min_info_gain,
+                min_samples_split
             )
         
         return tree.Tree(bestAttribute, children)
@@ -122,7 +136,8 @@ class Classifier(ClassifierMixin, BaseEstimator):
             X,
             y,
             attributes,
-            self.min_info_gain
+            self.min_info_gain,
+            self.min_samples_split
         )
 
         #atributos que sklearn espera encontrar luego de entrenar
