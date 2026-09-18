@@ -192,6 +192,6 @@ Dicho esto, hay dos cosas para revisar:
 Script del experimento (no versionado, corrido puntualmente):
 `evenness_experiment.py`. Resultados completos (todas las combinaciones de
 umbrales, ambos modelos, reportes por clase) en
-`experimento_evenness_resultados.json`, generado junto a este documento.
+`resultados/experimento_evenness_resultados.json`, generado junto a este documento.
 No se ejecutó entrenamiento ni predicción sobre el conjunto de test
 2024-2025 en ningún paso de este experimento.

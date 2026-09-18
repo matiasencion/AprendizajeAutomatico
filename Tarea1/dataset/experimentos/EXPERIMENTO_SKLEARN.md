@@ -89,5 +89,5 @@ que ya hace `min_info_gain`.
 
 Script: `sklearn_experiment.py`. Resultados completos (top-10 candidatos,
 hiperparámetros ganadores completos, reportes por clase) en
-`experimento_sklearn_resultados.json`. No se usó el conjunto de test
+`resultados/experimento_sklearn_resultados.json`. No se usó el conjunto de test
 2024-2025 en ningún paso.

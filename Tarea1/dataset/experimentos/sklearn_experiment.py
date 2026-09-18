@@ -221,7 +221,7 @@ def main():
     nb_model = CategoricalNB(min_categories=min_categories)
     results["categorical_nb"] = run_search(nb_model, nb_grid, "CategoricalNB (sklearn)")
 
-    out_path = project_dataset_dir / "experimento_sklearn_resultados.json"
+    out_path = project_dataset_dir / "experimentos" / "resultados" / "experimento_sklearn_resultados.json"
     with out_path.open("w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False, default=str)
     print(f"\nResultados guardados en {out_path}")

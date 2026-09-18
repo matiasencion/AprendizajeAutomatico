@@ -139,5 +139,5 @@ con el mejor en ambos modelos.** Tampoco hacía falta cambiarlo.
 
 Script: `window_experiment.py`. Resultados completos (todas las
 combinaciones, ambos modelos, con reportes por clase) en
-`experimento_ventanas_resultados.json`. No se usó el conjunto de test
+`resultados/experimento_ventanas_resultados.json`. No se usó el conjunto de test
 2024-2025 en ningún paso.

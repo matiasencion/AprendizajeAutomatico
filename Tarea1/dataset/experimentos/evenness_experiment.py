@@ -279,7 +279,7 @@ def main():
 
     print_shallow(fitted_tree)
 
-    out_path = project_dataset_dir / "experimento_evenness_resultados.json"
+    out_path = project_dataset_dir / "experimentos" / "resultados" / "experimento_evenness_resultados.json"
     with out_path.open("w", encoding="utf-8") as f:
         json.dump(results, f, indent=2, ensure_ascii=False, default=str)
     print(f"\nResultados detallados guardados en {out_path}")
