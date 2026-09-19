@@ -2,7 +2,7 @@
 
 Se comparan implementaciones propias de ID3 y Naive Bayes con modelos de scikit-learn para predecir resultados del fútbol uruguayo.
 
-La entrega principal es **`Tarea1/notebooks/entrega.ipynb`**, además se encuentra una copia ya ejecutado en **`Tarea1/notebooks/entrega_corrida_anterior.ipynb`**. Su ejecución requiere el CSV de `Tarea1/datos/`, los módulos de `Tarea1/src/` y las bibliotecas indicadas en `requirements.txt`. No utiliza los scripts de experimentación, sus JSON ni otros notebooks.
+La entrega principal es **`Tarea1/notebooks/entrega.ipynb`**. Su ejecución requiere el CSV de `Tarea1/datos/`, los módulos de `Tarea1/src/` y las bibliotecas indicadas en `requirements.txt`. No utiliza los scripts de experimentación, sus JSON ni otros notebooks.
 
 Las dependencias se instalan desde la raíz del repositorio:
 
