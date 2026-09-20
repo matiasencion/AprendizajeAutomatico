@@ -236,6 +236,65 @@ def grafico_mejor_f1_por_hiperparametro(
     return fig
 
 
+
+def grafico_menor_error_por_hiperparametros(paneles):
+    """Grafica el menor error observado para valores de varios hiperparametros.
+
+    Cada panel debe indicar ``cv_results``, ``param_col``, ``xlabel``,
+    ``titulo``, ``color`` y, opcionalmente, ``selected_value``. La tasa de
+    error se calcula como 1 - accuracy de validacion. Se reutilizan los
+    candidatos de la busqueda: no se vuelven a ajustar modelos.
+    """
+    fig, axes = plt.subplots(1, len(paneles), figsize=(11, 4.2), squeeze=False)
+
+    for ax, panel in zip(axes[0], paneles):
+        datos = panel["cv_results"][[panel["param_col"], "mean_test_accuracy"]].copy()
+        datos = datos.dropna(subset=["mean_test_accuracy"])
+        datos["error"] = 1.0 - datos["mean_test_accuracy"]
+        menores = datos.groupby(panel["param_col"], sort=True)["error"].min()
+
+        valores = list(menores.index)
+        errores = menores.to_numpy()
+        x = np.arange(len(valores))
+        ax.plot(x, errores, marker="o", color=panel["color"])
+
+        for posicion, error in zip(x, errores):
+            ax.annotate(
+                f"{error:.4f}",
+                (posicion, error),
+                xytext=(0, 7),
+                textcoords="offset points",
+                ha="center",
+                fontsize=8,
+            )
+
+        selected_value = panel.get("selected_value")
+        if selected_value is not None:
+            selected_x = valores.index(selected_value)
+            ax.axvline(
+                selected_x,
+                color="#C44E52",
+                linestyle="--",
+                linewidth=1.2,
+                label=f"valor seleccionado ({selected_value})",
+            )
+
+        ax.set_xticks(x)
+        ax.set_xticklabels(
+            [str(valor) for valor in valores],
+            rotation=45 if len(valores) > 6 else 0,
+            ha="right" if len(valores) > 6 else "center",
+        )
+        ax.set_xlabel(panel["xlabel"])
+        ax.set_ylabel("Menor error medio anual observado")
+        ax.set_title(panel["titulo"])
+        ax.grid(alpha=0.3)
+        if selected_value is not None:
+            ax.legend(fontsize=8)
+
+    fig.tight_layout()
+    return fig
+
 def grafico_ventanas(resultados, window_years=5):
     """Grafica resultados calculados por evaluacion.evaluar_ventanas."""
     dimensions = [("window_years", window_years), ("years_limit", 1), ("matches_limit", 5)]
