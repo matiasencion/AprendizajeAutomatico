@@ -176,40 +176,59 @@ def reporte_por_clase(y_true, y_pred, labels=("L", "E", "V"), target_names=("Loc
 # RandomizedSearchCV ya corrida: una fila por candidato probado).
 # ---------------------------------------------------------------------
 
-def grafico_sensibilidad_hiperparametro(
+def grafico_mejor_f1_por_hiperparametro(
     cv_results: pd.DataFrame,
     param_col: str,
     xlabel: str,
     titulo: str,
     metrica: str = "mean_test_f1_macro",
     color: str = "#4C72B0",
+    selected_value=None,
 ):
-    """
-    Vista marginal de sensibilidad: agrupa los ~500 candidatos de una
-    busqueda aleatoria por el valor que tomaron en `param_col` y grafica
-    la media (linea) y el rango entre percentiles 25-75 (banda sombreada)
-    de `metrica` en cada grupo. Como el resto de los hiperparametros varia
-    "como ruido" dentro de cada grupo (es una busqueda aleatoria, no una
-    grilla completa fijando todo lo demas), esto es una aproximacion al
-    efecto marginal de ese hiperparametro, no un corte perfectamente
-    controlado -- la estabilidad depende del soporte y de las interacciones entre parametros.
+    """Mejor resultado observado para cada valor de un hiperparametro.
+
+    La funcion reutiliza los candidatos evaluados por la busqueda anterior;
+    no ajusta modelos nuevos. Cada punto es el maximo de `metrica` entre las
+    configuraciones que contienen ese valor. Como los demas hiperparametros
+    tambien cambian, la figura compara los mejores candidatos observados y no
+    estima el efecto aislado del parametro.
     """
     datos = cv_results[[param_col, metrica]].dropna(subset=[metrica])
-    agrupado = datos.groupby(param_col)[metrica]
-    valores = sorted(agrupado.groups.keys())
-
-    medias = [agrupado.get_group(v).mean() for v in valores]
-    p25 = [agrupado.get_group(v).quantile(0.25) for v in valores]
-    p75 = [agrupado.get_group(v).quantile(0.75) for v in valores]
+    mejores = datos.groupby(param_col, sort=True)[metrica].max()
+    valores = list(mejores.index)
+    puntajes = mejores.to_numpy()
+    x = np.arange(len(valores))
 
     fig, ax = plt.subplots(figsize=(7, 4.5))
-    x = np.arange(len(valores))
-    ax.plot(x, medias, marker="o", color=color, label="media entre candidatos")
-    ax.fill_between(x, p25, p75, alpha=0.2, color=color, label="rango percentil 25-75")
+    ax.plot(x, puntajes, marker="o", color=color, label="mejor candidato por valor")
+    for posicion, puntaje in zip(x, puntajes):
+        ax.annotate(
+            f"{puntaje:.4f}",
+            (posicion, puntaje),
+            xytext=(0, 7),
+            textcoords="offset points",
+            ha="center",
+            fontsize=8,
+        )
+
+    if selected_value is not None:
+        selected_x = valores.index(selected_value)
+        ax.scatter(
+            selected_x,
+            puntajes[selected_x],
+            marker="*",
+            s=170,
+            color="#C44E52",
+            edgecolor="black",
+            linewidth=0.6,
+            zorder=4,
+            label=f"valor de la configuración seleccionada ({selected_value})",
+        )
+
     ax.set_xticks(x)
     ax.set_xticklabels([str(v) for v in valores], rotation=45 if len(valores) > 6 else 0, ha="right")
     ax.set_xlabel(xlabel)
-    ax.set_ylabel("F1 macro medio anual")
+    ax.set_ylabel("Mejor F1 macro medio anual observado")
     ax.set_title(titulo)
     ax.legend(fontsize=8)
     ax.grid(alpha=0.3)
@@ -250,7 +269,7 @@ def grafico_importancia_hiperparametros(
     simple de "cuanto mueve la aguja" ese hiperparametro dentro de la
     busqueda. Sirve para comparar de un vistazo muchos hiperparametros
     (por ejemplo, los margenes de discretizacion) sin tener que graficar
-    cada uno por separado. No reemplaza a `grafico_sensibilidad_hiperparametro`
+    cada uno por separado. Complementa las graficas del mejor F1 observado
     para los 2-3 hiperparametros que interesa ver en detalle.
     """
     filas = []
