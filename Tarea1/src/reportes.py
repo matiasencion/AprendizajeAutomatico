@@ -347,3 +347,112 @@ def grafico_importancia_hiperparametros(
     ax.grid(axis="x", alpha=0.3)
     fig.tight_layout()
     return fig
+
+def grafico_curva_validacion(
+    cv_results,
+    param_col: str,
+    xlabel: str,
+    titulo: str,
+    metrica: str = "mean_test_f1_macro",
+    mostrar_error: bool = True,
+    color: str = "#4C72B0",
+    selected_value=None,
+):
+    """
+    Grafica la curva de validación (rendimiento vs hiperparámetro) agrupando
+    los candidatos probados en `cv_results_` por cada valor del hiperparámetro.
+
+    Parámetros:
+    -----------
+    cv_results : dict o pd.DataFrame
+        El objeto `busqueda.cv_results_` retornado por RandomizedSearchCV/GridSearchCV.
+    param_col : str
+        Nombre de la columna del parámetro (ej: 'param_model__min_samples_leaf').
+    xlabel : str
+        Etiqueta para el eje X.
+    titulo : str
+        Título del gráfico.
+    metrica : str
+        Métrica a evaluar (por defecto 'mean_test_f1_macro').
+    mostrar_error : bool
+        Si es True, grafica (1 - rendimiento) para mostrar la tasa de error.
+        Si es False, grafica directamente la métrica (ej. F1 macro).
+    color : str
+        Color principal de la línea.
+    selected_value : optional
+        Valor del hiperparámetro que fue finalmente seleccionado para destacarlo con una estrella.
+    """
+    if isinstance(cv_results, dict):
+        cv_results = pd.DataFrame(cv_results)
+
+    # Filtrar datos válidos
+    datos = cv_results[[param_col, metrica]].dropna(subset=[metrica]).copy()
+    
+    # Si se requiere graficar el Error en lugar de la métrica directamente
+    if mostrar_error:
+        datos["valor_evaluado"] = 1.0 - datos[metrica]
+        ylabel = "Error (1 - F1 macro medio)"
+    else:
+        datos["valor_evaluado"] = datos[metrica]
+        ylabel = "F1 macro medio"
+
+    # Agrupar por el valor del hiperparámetro calculando media y desviación estándar
+    resumen = datos.groupby(param_col, sort=True)["valor_evaluado"].agg(["mean", "std"]).reset_index()
+    resumen = resumen.sort_values(by=param_col)
+
+    valores = resumen[param_col].tolist()
+    medias = resumen["mean"].to_numpy()
+    desviaciones = resumen["std"].fillna(0).to_numpy()
+    x = np.arange(len(valores))
+
+    fig, ax = plt.subplots(figsize=(7.5, 4.5))
+
+    # Línea principal con los promedios
+    ax.plot(x, medias, marker="o", linewidth=2, color=color, label="Promedio en Validación")
+    
+    # Banda de dispersión (± 1 Desviación Estándar entre experimentos/folds)
+    ax.fill_between(
+        x,
+        medias - desviaciones,
+        medias + desviaciones,
+        color=color,
+        alpha=0.15,
+        label="± 1 Desviación Estándar",
+    )
+
+    # Anotaciones con los valores en cada punto
+    for posicion, val in zip(x, medias):
+        ax.annotate(
+            f"{val:.4f}",
+            (posicion, val),
+            xytext=(0, 8),
+            textcoords="offset points",
+            ha="center",
+            fontsize=8,
+        )
+
+    # Destacar el valor óptimo/seleccionado si se proporciona
+    if selected_value is not None and selected_value in valores:
+        selected_x = valores.index(selected_value)
+        ax.scatter(
+            selected_x,
+            medias[selected_x],
+            marker="*",
+            s=180,
+            color="#C44E52",
+            edgecolor="black",
+            linewidth=0.8,
+            zorder=5,
+            label=f"Valor seleccionado ({selected_value})",
+        )
+
+    ax.set_xticks(x)
+    ax.set_xticklabels([str(v) for v in valores], rotation=45 if len(valores) > 6 else 0, ha="right")
+    ax.set_xlabel(xlabel)
+    ax.set_ylabel(ylabel)
+    ax.set_title(titulo)
+    ax.legend(fontsize=8, loc="best")
+    ax.grid(alpha=0.3, linestyle="--")
+    fig.tight_layout()
+
+    return fig
