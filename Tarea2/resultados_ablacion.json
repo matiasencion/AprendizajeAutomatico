@@ -1,0 +1,16 @@
+{
+ "DQN completo": {
+  "0": {
+   "recompensa_promedio": 182.85508873602816,
+   "tasa_exito": 0.38
+  },
+  "1": {
+   "recompensa_promedio": 205.12295717955504,
+   "tasa_exito": 0.59
+  },
+  "2": {
+   "recompensa_promedio": 234.64955112088958,
+   "tasa_exito": 0.76
+  }
+ }
+}
