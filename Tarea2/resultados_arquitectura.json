@@ -1,0 +1,170 @@
+{
+ "1x32": {
+  "0": {
+   "recompensa_promedio": 184.93646554413874,
+   "tasa_exito": 0.51
+  },
+  "1": {
+   "recompensa_promedio": -134.8740327739499,
+   "tasa_exito": 0.08
+  },
+  "2": {
+   "recompensa_promedio": 95.26390856969836,
+   "tasa_exito": 0.33
+  }
+ },
+ "1x64": {
+  "0": {
+   "recompensa_promedio": 232.68352907042637,
+   "tasa_exito": 0.77
+  },
+  "1": {
+   "recompensa_promedio": 125.03391200073236,
+   "tasa_exito": 0.36
+  },
+  "2": {
+   "recompensa_promedio": 239.07129669486477,
+   "tasa_exito": 0.85
+  }
+ },
+ "1x128": {
+  "0": {
+   "recompensa_promedio": 260.2853207411838,
+   "tasa_exito": 0.92
+  },
+  "1": {
+   "recompensa_promedio": 172.59882091814066,
+   "tasa_exito": 0.24
+  },
+  "2": {
+   "recompensa_promedio": 242.39802858292086,
+   "tasa_exito": 0.86
+  }
+ },
+ "1x256": {
+  "0": {
+   "recompensa_promedio": 217.32083837934834,
+   "tasa_exito": 0.61
+  },
+  "1": {
+   "recompensa_promedio": 265.9282091682355,
+   "tasa_exito": 0.93
+  },
+  "2": {
+   "recompensa_promedio": 264.45477004385305,
+   "tasa_exito": 0.92
+  }
+ },
+ "2x32": {
+  "0": {
+   "recompensa_promedio": 199.3897883374489,
+   "tasa_exito": 0.69
+  },
+  "1": {
+   "recompensa_promedio": 206.7455444818406,
+   "tasa_exito": 0.75
+  },
+  "2": {
+   "recompensa_promedio": 181.22739868356769,
+   "tasa_exito": 0.6
+  }
+ },
+ "2x64": {
+  "0": {
+   "recompensa_promedio": 152.67543187700076,
+   "tasa_exito": 0.45
+  },
+  "1": {
+   "recompensa_promedio": 268.3451963698851,
+   "tasa_exito": 0.96
+  },
+  "2": {
+   "recompensa_promedio": 221.73478549651102,
+   "tasa_exito": 0.8
+  }
+ },
+ "2x128": {
+  "0": {
+   "recompensa_promedio": 178.41309743812167,
+   "tasa_exito": 0.39
+  },
+  "1": {
+   "recompensa_promedio": 205.24090005278637,
+   "tasa_exito": 0.47
+  },
+  "2": {
+   "recompensa_promedio": 176.60827168188604,
+   "tasa_exito": 0.61
+  }
+ },
+ "2x256": {
+  "0": {
+   "recompensa_promedio": 178.68481223061644,
+   "tasa_exito": 0.52
+  },
+  "1": {
+   "recompensa_promedio": 264.6055300079757,
+   "tasa_exito": 0.93
+  },
+  "2": {
+   "recompensa_promedio": 165.6096240783689,
+   "tasa_exito": 0.38
+  }
+ },
+ "3x32": {
+  "0": {
+   "recompensa_promedio": 113.94915030603103,
+   "tasa_exito": 0.31
+  },
+  "1": {
+   "recompensa_promedio": 173.42604067243778,
+   "tasa_exito": 0.62
+  },
+  "2": {
+   "recompensa_promedio": 206.6820486572645,
+   "tasa_exito": 0.71
+  }
+ },
+ "3x64": {
+  "0": {
+   "recompensa_promedio": 69.43166547941274,
+   "tasa_exito": 0.15
+  },
+  "1": {
+   "recompensa_promedio": 172.024225026592,
+   "tasa_exito": 0.52
+  },
+  "2": {
+   "recompensa_promedio": 241.55877305551567,
+   "tasa_exito": 0.88
+  }
+ },
+ "3x128": {
+  "0": {
+   "recompensa_promedio": 188.6098577239075,
+   "tasa_exito": 0.41
+  },
+  "1": {
+   "recompensa_promedio": 176.67988141499987,
+   "tasa_exito": 0.54
+  },
+  "2": {
+   "recompensa_promedio": 200.83564277910375,
+   "tasa_exito": 0.66
+  }
+ },
+ "3x256": {
+  "0": {
+   "recompensa_promedio": 172.83502084220322,
+   "tasa_exito": 0.59
+  },
+  "1": {
+   "recompensa_promedio": 90.05178901429315,
+   "tasa_exito": 0.44
+  },
+  "2": {
+   "recompensa_promedio": 225.1284504372241,
+   "tasa_exito": 0.8
+  }
+ }
+}

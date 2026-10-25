@@ -1,16 +1,90 @@
 {
  "DQN completo": {
   "0": {
-   "recompensa_promedio": 182.85508873602816,
-   "tasa_exito": 0.38
+   "recompensa_promedio": 152.67543187700076,
+   "tasa_exito": 0.45
   },
   "1": {
-   "recompensa_promedio": 205.12295717955504,
-   "tasa_exito": 0.59
+   "recompensa_promedio": 268.3451963698851,
+   "tasa_exito": 0.96
   },
   "2": {
-   "recompensa_promedio": 234.64955112088958,
-   "tasa_exito": 0.76
+   "recompensa_promedio": 221.73478549651102,
+   "tasa_exito": 0.8
+  },
+  "3": {
+   "recompensa_promedio": 240.90409882385342,
+   "tasa_exito": 0.81
+  },
+  "4": {
+   "recompensa_promedio": 252.4458148875601,
+   "tasa_exito": 0.93
+  }
+ },
+ "Sin target network": {
+  "0": {
+   "recompensa_promedio": -17.777146998021575,
+   "tasa_exito": 0.06
+  },
+  "1": {
+   "recompensa_promedio": 119.55710465322858,
+   "tasa_exito": 0.41
+  },
+  "2": {
+   "recompensa_promedio": 126.8701673260218,
+   "tasa_exito": 0.4
+  },
+  "3": {
+   "recompensa_promedio": -563.0339244337187,
+   "tasa_exito": 0.0
+  },
+  "4": {
+   "recompensa_promedio": 162.5721366333604,
+   "tasa_exito": 0.63
+  }
+ },
+ "Sin replay buffer": {
+  "0": {
+   "recompensa_promedio": 125.5622762217639,
+   "tasa_exito": 0.47
+  },
+  "1": {
+   "recompensa_promedio": -124.75547121488462,
+   "tasa_exito": 0.0
+  },
+  "2": {
+   "recompensa_promedio": -142.29333662664666,
+   "tasa_exito": 0.02
+  },
+  "3": {
+   "recompensa_promedio": -130.85367472383334,
+   "tasa_exito": 0.0
+  },
+  "4": {
+   "recompensa_promedio": -17.058892124040078,
+   "tasa_exito": 0.1
+  }
+ },
+ "P\u00e9rdida MSE (sin Huber)": {
+  "0": {
+   "recompensa_promedio": 248.3075748002965,
+   "tasa_exito": 0.91
+  },
+  "1": {
+   "recompensa_promedio": 276.41107299223836,
+   "tasa_exito": 0.99
+  },
+  "2": {
+   "recompensa_promedio": 259.83336133203653,
+   "tasa_exito": 0.93
+  },
+  "3": {
+   "recompensa_promedio": 255.54941709710042,
+   "tasa_exito": 0.95
+  },
+  "4": {
+   "recompensa_promedio": 260.45697108533744,
+   "tasa_exito": 0.94
   }
  }
 }
