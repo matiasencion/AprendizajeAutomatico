@@ -11,6 +11,80 @@
   "2": {
    "recompensa_promedio": 234.64955112088958,
    "tasa_exito": 0.76
+  },
+  "3": {
+   "recompensa_promedio": 251.1801387760935,
+   "tasa_exito": 0.91
+  },
+  "4": {
+   "recompensa_promedio": 241.6890821102389,
+   "tasa_exito": 0.88
+  }
+ },
+ "Sin target network": {
+  "0": {
+   "recompensa_promedio": 210.42893469755734,
+   "tasa_exito": 0.71
+  },
+  "1": {
+   "recompensa_promedio": -9.78172961206689,
+   "tasa_exito": 0.03
+  },
+  "2": {
+   "recompensa_promedio": -26.34690175321516,
+   "tasa_exito": 0.03
+  },
+  "3": {
+   "recompensa_promedio": -563.0341902379614,
+   "tasa_exito": 0.0
+  },
+  "4": {
+   "recompensa_promedio": 236.66840594254768,
+   "tasa_exito": 0.73
+  }
+ },
+ "Sin replay buffer": {
+  "0": {
+   "recompensa_promedio": -81.90787933926855,
+   "tasa_exito": 0.0
+  },
+  "1": {
+   "recompensa_promedio": -169.595483951681,
+   "tasa_exito": 0.0
+  },
+  "2": {
+   "recompensa_promedio": -39.86901126251283,
+   "tasa_exito": 0.02
+  },
+  "3": {
+   "recompensa_promedio": -17.81006850466509,
+   "tasa_exito": 0.03
+  },
+  "4": {
+   "recompensa_promedio": -93.160987414434,
+   "tasa_exito": 0.0
+  }
+ },
+ "P\u00e9rdida MSE (sin Huber)": {
+  "0": {
+   "recompensa_promedio": 268.4867426229591,
+   "tasa_exito": 0.97
+  },
+  "1": {
+   "recompensa_promedio": 233.71142339934715,
+   "tasa_exito": 0.83
+  },
+  "2": {
+   "recompensa_promedio": 260.09014822298695,
+   "tasa_exito": 0.91
+  },
+  "3": {
+   "recompensa_promedio": 259.5513607886466,
+   "tasa_exito": 0.95
+  },
+  "4": {
+   "recompensa_promedio": 232.81844893468198,
+   "tasa_exito": 0.84
   }
  }
 }
