@@ -1,0 +1,572 @@
+{
+ "batch_size=32, buffer_size=20000": {
+  "100": {
+   "recompensa_promedio": 186.33362681713706,
+   "tasa_exito": 0.45,
+   "configuracion": {
+    "episodios_entrenamiento": 600,
+    "episodios_evaluacion": 100,
+    "semilla_evaluacion": 20000,
+    "entrenamiento": {
+     "max_pasos": 1000,
+     "umbral_resolucion": null
+    },
+    "agente": {
+     "semilla": null,
+     "gamma": 0.99,
+     "lr": 0.0005,
+     "batch_size": 32,
+     "buffer_size": 20000,
+     "tau": 0.001,
+     "epsilon_start": 1.0,
+     "epsilon_min": 0.01,
+     "epsilon_decay": 0.995,
+     "capas_ocultas": [
+      128,
+      128
+     ],
+     "usar_target_net": true,
+     "usar_replay_buffer": true,
+     "usar_huber": true
+    }
+   }
+  },
+  "101": {
+   "recompensa_promedio": 244.36043848897236,
+   "tasa_exito": 0.85,
+   "configuracion": {
+    "episodios_entrenamiento": 600,
+    "episodios_evaluacion": 100,
+    "semilla_evaluacion": 20000,
+    "entrenamiento": {
+     "max_pasos": 1000,
+     "umbral_resolucion": null
+    },
+    "agente": {
+     "semilla": null,
+     "gamma": 0.99,
+     "lr": 0.0005,
+     "batch_size": 32,
+     "buffer_size": 20000,
+     "tau": 0.001,
+     "epsilon_start": 1.0,
+     "epsilon_min": 0.01,
+     "epsilon_decay": 0.995,
+     "capas_ocultas": [
+      128,
+      128
+     ],
+     "usar_target_net": true,
+     "usar_replay_buffer": true,
+     "usar_huber": true
+    }
+   }
+  },
+  "102": {
+   "recompensa_promedio": 241.41634805890143,
+   "tasa_exito": 0.84,
+   "configuracion": {
+    "episodios_entrenamiento": 600,
+    "episodios_evaluacion": 100,
+    "semilla_evaluacion": 20000,
+    "entrenamiento": {
+     "max_pasos": 1000,
+     "umbral_resolucion": null
+    },
+    "agente": {
+     "semilla": null,
+     "gamma": 0.99,
+     "lr": 0.0005,
+     "batch_size": 32,
+     "buffer_size": 20000,
+     "tau": 0.001,
+     "epsilon_start": 1.0,
+     "epsilon_min": 0.01,
+     "epsilon_decay": 0.995,
+     "capas_ocultas": [
+      128,
+      128
+     ],
+     "usar_target_net": true,
+     "usar_replay_buffer": true,
+     "usar_huber": true
+    }
+   }
+  }
+ },
+ "batch_size=32, buffer_size=100000": {
+  "101": {
+   "recompensa_promedio": 199.77109547234076,
+   "tasa_exito": 0.62,
+   "configuracion": {
+    "episodios_entrenamiento": 600,
+    "episodios_evaluacion": 100,
+    "semilla_evaluacion": 20000,
+    "entrenamiento": {
+     "max_pasos": 1000,
+     "umbral_resolucion": null
+    },
+    "agente": {
+     "semilla": null,
+     "gamma": 0.99,
+     "lr": 0.0005,
+     "batch_size": 32,
+     "buffer_size": 100000,
+     "tau": 0.001,
+     "epsilon_start": 1.0,
+     "epsilon_min": 0.01,
+     "epsilon_decay": 0.995,
+     "capas_ocultas": [
+      128,
+      128
+     ],
+     "usar_target_net": true,
+     "usar_replay_buffer": true,
+     "usar_huber": true
+    }
+   }
+  },
+  "102": {
+   "recompensa_promedio": 243.23599157767418,
+   "tasa_exito": 0.84,
+   "configuracion": {
+    "episodios_entrenamiento": 600,
+    "episodios_evaluacion": 100,
+    "semilla_evaluacion": 20000,
+    "entrenamiento": {
+     "max_pasos": 1000,
+     "umbral_resolucion": null
+    },
+    "agente": {
+     "semilla": null,
+     "gamma": 0.99,
+     "lr": 0.0005,
+     "batch_size": 32,
+     "buffer_size": 100000,
+     "tau": 0.001,
+     "epsilon_start": 1.0,
+     "epsilon_min": 0.01,
+     "epsilon_decay": 0.995,
+     "capas_ocultas": [
+      128,
+      128
+     ],
+     "usar_target_net": true,
+     "usar_replay_buffer": true,
+     "usar_huber": true
+    }
+   }
+  },
+  "100": {
+   "recompensa_promedio": 204.82897811449897,
+   "tasa_exito": 0.48,
+   "configuracion": {
+    "episodios_entrenamiento": 600,
+    "episodios_evaluacion": 100,
+    "semilla_evaluacion": 20000,
+    "entrenamiento": {
+     "max_pasos": 1000,
+     "umbral_resolucion": null
+    },
+    "agente": {
+     "semilla": null,
+     "gamma": 0.99,
+     "lr": 0.0005,
+     "batch_size": 32,
+     "buffer_size": 100000,
+     "tau": 0.001,
+     "epsilon_start": 1.0,
+     "epsilon_min": 0.01,
+     "epsilon_decay": 0.995,
+     "capas_ocultas": [
+      128,
+      128
+     ],
+     "usar_target_net": true,
+     "usar_replay_buffer": true,
+     "usar_huber": true
+    }
+   }
+  }
+ },
+ "batch_size=64, buffer_size=20000": {
+  "101": {
+   "recompensa_promedio": 185.67236273557228,
+   "tasa_exito": 0.7,
+   "configuracion": {
+    "episodios_entrenamiento": 600,
+    "episodios_evaluacion": 100,
+    "semilla_evaluacion": 20000,
+    "entrenamiento": {
+     "max_pasos": 1000,
+     "umbral_resolucion": null
+    },
+    "agente": {
+     "semilla": null,
+     "gamma": 0.99,
+     "lr": 0.0005,
+     "batch_size": 64,
+     "buffer_size": 20000,
+     "tau": 0.001,
+     "epsilon_start": 1.0,
+     "epsilon_min": 0.01,
+     "epsilon_decay": 0.995,
+     "capas_ocultas": [
+      128,
+      128
+     ],
+     "usar_target_net": true,
+     "usar_replay_buffer": true,
+     "usar_huber": true
+    }
+   }
+  },
+  "100": {
+   "recompensa_promedio": 197.72314592218322,
+   "tasa_exito": 0.59,
+   "configuracion": {
+    "episodios_entrenamiento": 600,
+    "episodios_evaluacion": 100,
+    "semilla_evaluacion": 20000,
+    "entrenamiento": {
+     "max_pasos": 1000,
+     "umbral_resolucion": null
+    },
+    "agente": {
+     "semilla": null,
+     "gamma": 0.99,
+     "lr": 0.0005,
+     "batch_size": 64,
+     "buffer_size": 20000,
+     "tau": 0.001,
+     "epsilon_start": 1.0,
+     "epsilon_min": 0.01,
+     "epsilon_decay": 0.995,
+     "capas_ocultas": [
+      128,
+      128
+     ],
+     "usar_target_net": true,
+     "usar_replay_buffer": true,
+     "usar_huber": true
+    }
+   }
+  },
+  "102": {
+   "recompensa_promedio": 221.59006680568672,
+   "tasa_exito": 0.77,
+   "configuracion": {
+    "episodios_entrenamiento": 600,
+    "episodios_evaluacion": 100,
+    "semilla_evaluacion": 20000,
+    "entrenamiento": {
+     "max_pasos": 1000,
+     "umbral_resolucion": null
+    },
+    "agente": {
+     "semilla": null,
+     "gamma": 0.99,
+     "lr": 0.0005,
+     "batch_size": 64,
+     "buffer_size": 20000,
+     "tau": 0.001,
+     "epsilon_start": 1.0,
+     "epsilon_min": 0.01,
+     "epsilon_decay": 0.995,
+     "capas_ocultas": [
+      128,
+      128
+     ],
+     "usar_target_net": true,
+     "usar_replay_buffer": true,
+     "usar_huber": true
+    }
+   }
+  }
+ },
+ "batch_size=64, buffer_size=100000": {
+  "100": {
+   "recompensa_promedio": 221.47681004510196,
+   "tasa_exito": 0.66,
+   "configuracion": {
+    "episodios_entrenamiento": 600,
+    "episodios_evaluacion": 100,
+    "semilla_evaluacion": 20000,
+    "entrenamiento": {
+     "max_pasos": 1000,
+     "umbral_resolucion": null
+    },
+    "agente": {
+     "semilla": null,
+     "gamma": 0.99,
+     "lr": 0.0005,
+     "batch_size": 64,
+     "buffer_size": 100000,
+     "tau": 0.001,
+     "epsilon_start": 1.0,
+     "epsilon_min": 0.01,
+     "epsilon_decay": 0.995,
+     "capas_ocultas": [
+      128,
+      128
+     ],
+     "usar_target_net": true,
+     "usar_replay_buffer": true,
+     "usar_huber": true
+    }
+   }
+  },
+  "101": {
+   "recompensa_promedio": 264.2134269131026,
+   "tasa_exito": 0.96,
+   "configuracion": {
+    "episodios_entrenamiento": 600,
+    "episodios_evaluacion": 100,
+    "semilla_evaluacion": 20000,
+    "entrenamiento": {
+     "max_pasos": 1000,
+     "umbral_resolucion": null
+    },
+    "agente": {
+     "semilla": null,
+     "gamma": 0.99,
+     "lr": 0.0005,
+     "batch_size": 64,
+     "buffer_size": 100000,
+     "tau": 0.001,
+     "epsilon_start": 1.0,
+     "epsilon_min": 0.01,
+     "epsilon_decay": 0.995,
+     "capas_ocultas": [
+      128,
+      128
+     ],
+     "usar_target_net": true,
+     "usar_replay_buffer": true,
+     "usar_huber": true
+    }
+   }
+  },
+  "102": {
+   "recompensa_promedio": 251.43410333878083,
+   "tasa_exito": 0.87,
+   "configuracion": {
+    "episodios_entrenamiento": 600,
+    "episodios_evaluacion": 100,
+    "semilla_evaluacion": 20000,
+    "entrenamiento": {
+     "max_pasos": 1000,
+     "umbral_resolucion": null
+    },
+    "agente": {
+     "semilla": null,
+     "gamma": 0.99,
+     "lr": 0.0005,
+     "batch_size": 64,
+     "buffer_size": 100000,
+     "tau": 0.001,
+     "epsilon_start": 1.0,
+     "epsilon_min": 0.01,
+     "epsilon_decay": 0.995,
+     "capas_ocultas": [
+      128,
+      128
+     ],
+     "usar_target_net": true,
+     "usar_replay_buffer": true,
+     "usar_huber": true
+    }
+   }
+  }
+ },
+ "batch_size=128, buffer_size=20000": {
+  "101": {
+   "recompensa_promedio": 202.08685974314733,
+   "tasa_exito": 0.7,
+   "configuracion": {
+    "episodios_entrenamiento": 600,
+    "episodios_evaluacion": 100,
+    "semilla_evaluacion": 20000,
+    "entrenamiento": {
+     "max_pasos": 1000,
+     "umbral_resolucion": null
+    },
+    "agente": {
+     "semilla": null,
+     "gamma": 0.99,
+     "lr": 0.0005,
+     "batch_size": 128,
+     "buffer_size": 20000,
+     "tau": 0.001,
+     "epsilon_start": 1.0,
+     "epsilon_min": 0.01,
+     "epsilon_decay": 0.995,
+     "capas_ocultas": [
+      128,
+      128
+     ],
+     "usar_target_net": true,
+     "usar_replay_buffer": true,
+     "usar_huber": true
+    }
+   }
+  },
+  "102": {
+   "recompensa_promedio": 191.43481290752544,
+   "tasa_exito": 0.43,
+   "configuracion": {
+    "episodios_entrenamiento": 600,
+    "episodios_evaluacion": 100,
+    "semilla_evaluacion": 20000,
+    "entrenamiento": {
+     "max_pasos": 1000,
+     "umbral_resolucion": null
+    },
+    "agente": {
+     "semilla": null,
+     "gamma": 0.99,
+     "lr": 0.0005,
+     "batch_size": 128,
+     "buffer_size": 20000,
+     "tau": 0.001,
+     "epsilon_start": 1.0,
+     "epsilon_min": 0.01,
+     "epsilon_decay": 0.995,
+     "capas_ocultas": [
+      128,
+      128
+     ],
+     "usar_target_net": true,
+     "usar_replay_buffer": true,
+     "usar_huber": true
+    }
+   }
+  },
+  "100": {
+   "recompensa_promedio": 50.3441232096512,
+   "tasa_exito": 0.76,
+   "configuracion": {
+    "episodios_entrenamiento": 600,
+    "episodios_evaluacion": 100,
+    "semilla_evaluacion": 20000,
+    "entrenamiento": {
+     "max_pasos": 1000,
+     "umbral_resolucion": null
+    },
+    "agente": {
+     "semilla": null,
+     "gamma": 0.99,
+     "lr": 0.0005,
+     "batch_size": 128,
+     "buffer_size": 20000,
+     "tau": 0.001,
+     "epsilon_start": 1.0,
+     "epsilon_min": 0.01,
+     "epsilon_decay": 0.995,
+     "capas_ocultas": [
+      128,
+      128
+     ],
+     "usar_target_net": true,
+     "usar_replay_buffer": true,
+     "usar_huber": true
+    }
+   }
+  }
+ },
+ "batch_size=128, buffer_size=100000": {
+  "100": {
+   "recompensa_promedio": 197.95202327239085,
+   "tasa_exito": 0.75,
+   "configuracion": {
+    "episodios_entrenamiento": 600,
+    "episodios_evaluacion": 100,
+    "semilla_evaluacion": 20000,
+    "entrenamiento": {
+     "max_pasos": 1000,
+     "umbral_resolucion": null
+    },
+    "agente": {
+     "semilla": null,
+     "gamma": 0.99,
+     "lr": 0.0005,
+     "batch_size": 128,
+     "buffer_size": 100000,
+     "tau": 0.001,
+     "epsilon_start": 1.0,
+     "epsilon_min": 0.01,
+     "epsilon_decay": 0.995,
+     "capas_ocultas": [
+      128,
+      128
+     ],
+     "usar_target_net": true,
+     "usar_replay_buffer": true,
+     "usar_huber": true
+    }
+   }
+  },
+  "101": {
+   "recompensa_promedio": 183.34074940517232,
+   "tasa_exito": 0.36,
+   "configuracion": {
+    "episodios_entrenamiento": 600,
+    "episodios_evaluacion": 100,
+    "semilla_evaluacion": 20000,
+    "entrenamiento": {
+     "max_pasos": 1000,
+     "umbral_resolucion": null
+    },
+    "agente": {
+     "semilla": null,
+     "gamma": 0.99,
+     "lr": 0.0005,
+     "batch_size": 128,
+     "buffer_size": 100000,
+     "tau": 0.001,
+     "epsilon_start": 1.0,
+     "epsilon_min": 0.01,
+     "epsilon_decay": 0.995,
+     "capas_ocultas": [
+      128,
+      128
+     ],
+     "usar_target_net": true,
+     "usar_replay_buffer": true,
+     "usar_huber": true
+    }
+   }
+  },
+  "102": {
+   "recompensa_promedio": 244.4333081286307,
+   "tasa_exito": 0.81,
+   "configuracion": {
+    "episodios_entrenamiento": 600,
+    "episodios_evaluacion": 100,
+    "semilla_evaluacion": 20000,
+    "entrenamiento": {
+     "max_pasos": 1000,
+     "umbral_resolucion": null
+    },
+    "agente": {
+     "semilla": null,
+     "gamma": 0.99,
+     "lr": 0.0005,
+     "batch_size": 128,
+     "buffer_size": 100000,
+     "tau": 0.001,
+     "epsilon_start": 1.0,
+     "epsilon_min": 0.01,
+     "epsilon_decay": 0.995,
+     "capas_ocultas": [
+      128,
+      128
+     ],
+     "usar_target_net": true,
+     "usar_replay_buffer": true,
+     "usar_huber": true
+    }
+   }
+  }
+ }
+}
